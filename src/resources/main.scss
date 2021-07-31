@@ -1,0 +1,15 @@
+html {
+  body {
+    #root {
+      h1 {
+        font-size: 38px;
+      }
+    }
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
