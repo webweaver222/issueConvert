@@ -1,0 +1,11 @@
+.MainWrapper {
+  display: flex;
+  height: 100vh;
+
+  .main {
+    margin: auto;
+    h2 {
+      font-family: "druk";
+    }
+  }
+}

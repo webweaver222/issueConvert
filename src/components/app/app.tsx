@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-//import { Route, Switch } from "react-router-dom";
+import Main from "../Main";
+import BGC from "./background";
+import "resources/reset.scss";
 import "resources/main.scss";
 import "./app.scss";
 
 const App = () => {
   const [name, setName] = useState("");
 
-  useEffect(() => {
-    setName("alex");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="app">
-      <h1>Hellow {name} !</h1>;
+      <Main />
+      <BGC />
     </div>
   );
 };
