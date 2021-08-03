@@ -4,8 +4,20 @@
 
   .main {
     margin: auto;
-    h2 {
-      font-family: "druk";
+    display: flex;
+    align-items: flex-end;
+
+    input {
+      width: 300px;
+    }
+
+    button.button {
+      display: inline-block;
+      width: 120px;
+      height: 30px;
+      margin-left: 20px;
+      font-family: montserrat;
+      font-size: 14px;
     }
   }
 }
