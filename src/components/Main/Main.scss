@@ -11,9 +11,40 @@
       width: 300px;
     }
 
+    ul {
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      transform: translateY(100%);
+      border: 1px solid black;
+      border-radius: 10px;
+      overflow: hidden;
+
+      li {
+        padding: 7px 6px;
+        border-bottom: 1px solid black;
+        cursor: pointer;
+        transition: 0.5s ease;
+
+        .owner {
+          padding: 3px;
+          border: 1px solid black;
+          border-radius: 3px;
+          font-size: 14px;
+        }
+      }
+
+      li:last-of-type {
+        border-bottom: none;
+      }
+
+      li:hover {
+        background-color: rgb(240, 230, 230);
+      }
+    }
+
     button.button {
       display: inline-block;
-      width: 120px;
       height: 30px;
       margin-left: 20px;
       font-family: montserrat;

@@ -43,6 +43,7 @@ html {
 .input-wrapper {
   display: flex;
   flex-direction: column;
+  position: relative;
   label {
     font-family: druk;
     text-align: center;

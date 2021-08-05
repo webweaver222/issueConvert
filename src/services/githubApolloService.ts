@@ -2,9 +2,9 @@ import {
   ApolloClient,
   NormalizedCacheObject,
   InMemoryCache,
-  useQuery,
   HttpLink,
   gql,
+  ApolloQueryResult,
 } from "@apollo/client";
 
 import { setContext } from "@apollo/client/link/context";
@@ -12,7 +12,7 @@ import { setContext } from "@apollo/client/link/context";
 class GitgubApolloService {
   client: ApolloClient<NormalizedCacheObject>;
   url: string = "https://api.github.com/graphql";
-  token: string = "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";
+  token: string = "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";
 
   constructor() {
     const httpLink = new HttpLink({ uri: this.url });
@@ -21,7 +21,7 @@ class GitgubApolloService {
       return {
         headers: {
           ...headers,
-          authorization: this.token ? `Bearer ${this.token}` : "",
+          Authorization: this.token ? `bearer ${this.token}` : "",
         },
       };
     });
@@ -32,19 +32,29 @@ class GitgubApolloService {
     });
   }
 
-  /*async getRepos(input: string) {
-    const res = await this.client.query({
+  getRepos = (input: string) => {
+    return this.client.query({
       query: gql`
-        query {
-          search(query: ${input}, type: REPOSITORY, first: 5) {
+        query ($input: String!) {
+          search(query: $input, type: REPOSITORY, first: 5) {
             nodes {
-              name
+              ... on Repository {
+                id
+                name
+                owner {
+                  login
+                }
+              }
             }
           }
         }
       `,
+      variables: {
+        input,
+      },
     });
-  }*/
+  };
 }
 
 export default GitgubApolloService;
+export type { ApolloQueryResult };

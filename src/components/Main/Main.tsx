@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import GitgubApolloService from "../../services/githubApolloService";
+import React, { useState, useEffect, useCallback } from "react";
+import GitgubApolloService, {
+  ApolloQueryResult,
+} from "../../services/githubApolloService";
 import { withGithubApi } from "../hoc/withService";
-import { compose } from "../../utils";
+import { compose, debounce } from "../../utils";
 
 import "./Main.scss";
 
@@ -10,11 +12,31 @@ interface MainInterface {
 }
 
 const Main: React.FC<MainInterface> = ({ service }: MainInterface) => {
-  useEffect(() => {
-    console.log(service);
-  }, [service]);
-
   const [input, setInput] = useState("");
+  const [repoList, setRepoList] = useState([]);
+
+  const debounced = useCallback(
+    debounce(service.getRepos, (response: Promise<ApolloQueryResult<any>>) => {
+      response.then(
+        ({
+          data: {
+            search: { nodes },
+          },
+        }) => {
+          setRepoList(nodes);
+        }
+      );
+    }),
+    [service.getRepos]
+  );
+
+  useEffect(() => {
+    if (input) {
+      debounced(input);
+    }
+
+    setRepoList([]);
+  }, [input]);
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     return setInput(e.target.value);
@@ -26,8 +48,20 @@ const Main: React.FC<MainInterface> = ({ service }: MainInterface) => {
         <div className="input-wrapper">
           <label>Pick a repository...</label>
           <input type="text" value={input} onChange={onChangeInput} />
+          <ul
+            style={{ visibility: repoList.length > 0 ? "visible" : "hidden" }}
+          >
+            {repoList.length > 0 &&
+              repoList.map((node: any, i) => (
+                <li key={i}>
+                  {" "}
+                  <span className="repo">{node.name}</span>{" "}
+                  <span className="owner">{node.owner.login}</span>
+                </li>
+              ))}
+          </ul>
         </div>
-        <button className="button">Find</button>
+        <button className="button">Select Repository</button>
       </div>
     </div>
   );

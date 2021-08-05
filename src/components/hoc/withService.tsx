@@ -1,5 +1,4 @@
 import React from "react";
-//import GitgubApolloService from "../../services/githubApolloService";
 
 import { ServiceConsumer } from "../elements/service-provider";
 
