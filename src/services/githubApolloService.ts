@@ -9,10 +9,10 @@ import {
 
 import { setContext } from "@apollo/client/link/context";
 
-class GitgubApolloService {
+class GithubApolloService {
   client: ApolloClient<NormalizedCacheObject>;
   url: string = "https://api.github.com/graphql";
-  token: string = "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";
+  token: string = "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";
 
   constructor() {
     const httpLink = new HttpLink({ uri: this.url });
@@ -41,6 +41,7 @@ class GitgubApolloService {
               ... on Repository {
                 id
                 name
+                nameWithOwner
                 owner {
                   login
                 }
@@ -56,5 +57,5 @@ class GitgubApolloService {
   };
 }
 
-export default GitgubApolloService;
+export default GithubApolloService;
 export type { ApolloQueryResult };
