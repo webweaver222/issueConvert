@@ -27,6 +27,7 @@
     }
 
     ul {
+      width: 300px;
       position: absolute;
       bottom: -6px;
       left: 10px;
@@ -40,6 +41,7 @@
         border-bottom: 1px solid black;
         cursor: pointer;
         transition: 0.5s ease;
+        overflow: hidden;
 
         .owner {
           padding: 3px;

@@ -7,12 +7,14 @@ import {
   ApolloQueryResult,
 } from "@apollo/client";
 
+import config from "../../config";
+
 import { setContext } from "@apollo/client/link/context";
 
 class GithubApolloService {
   client: ApolloClient<NormalizedCacheObject>;
   url: string = "https://api.github.com/graphql";
-  token: string = "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";
+  token: string = config.github_token;
 
   constructor() {
     const httpLink = new HttpLink({ uri: this.url });

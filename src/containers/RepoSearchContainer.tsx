@@ -1,87 +1,75 @@
-import React, { useState, useCallback, useEffect, FC } from "react";
-import GitgubApolloService, {
-  ApolloQueryResult,
-} from "../services/githubApolloService";
+import React, { useState, FC } from "react";
+import GitgubApolloService from "../services/githubApolloService";
 import { withGithubApi } from "../components/hoc/withService";
-import { compose, debounce } from "../utils";
-import { RepoSearchComponent } from "../components/RepoSearch/RepoSearch";
-
-interface MainInterface {
-  service: GitgubApolloService;
-}
+import { compose } from "../utils";
 
 interface SelectedRepo {
   id: string;
   title: string;
 }
 
-const RepoSearchContainer = (Wrapped: FC<any>) =>
-  compose(withGithubApi)(({ service: githubApi }: MainInterface) => {
-    const [input, setInput] = useState("");
-    const [repoList, setRepoList] = useState([]);
-    const [selectedRepo, setSelectedRepo] = useState({
-      id: "",
-      title: "",
-    });
+interface RepoSearchComponent {
+  input: string;
+  repoList: object[]; // comes from api
+  selectedRepo: SelectedRepo;
+  githubApi: GitgubApolloService;
+  fetching: boolean;
+  onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onRepoClick: (id: string, title: string) => void;
+  onDeleteClick: () => void;
+  setRepoList: React.Dispatch<React.SetStateAction<never[]>>;
+}
 
-    const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-      return setInput(e.target.value);
-    };
-
-    const onRepoClick = (id: string, title: string) => {
-      setSelectedRepo({
-        id,
-        title,
-      });
-      setInput("");
-      setRepoList([]);
-    };
-
-    const onDeleteClick = () => {
-      setSelectedRepo({
+//Getting api service via hoc with Service Consumer
+const RepoSearchContainer = (Wrapped: FC<RepoSearchComponent>) =>
+  compose(withGithubApi)(
+    ({ service: githubApi }: { service: GitgubApolloService }) => {
+      // Component's state
+      const [input, setInput] = useState("");
+      const [repoList, setRepoList] = useState([]);
+      const [selectedRepo, setSelectedRepo] = useState({
         id: "",
         title: "",
       });
-    };
 
-    const debounced = useCallback(
-      debounce(
-        githubApi.getRepos,
-        (response: Promise<ApolloQueryResult<any>>) => {
-          response.then(
-            ({
-              data: {
-                search: { nodes },
-              },
-            }) => {
-              setRepoList(nodes);
-            }
-          );
-        }
-      ),
-      [githubApi.getRepos]
-    );
+      //Component's events
+      const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        return setInput(e.target.value);
+      };
 
-    useEffect(() => {
-      if (input) {
-        debounced(input);
-      }
+      const onRepoClick = (id: string, title: string) => {
+        setSelectedRepo({
+          id,
+          title,
+        });
+        setInput("");
+        setRepoList([]);
+      };
 
-      setRepoList([]);
-    }, [input]);
+      const onDeleteClick = () => {
+        setSelectedRepo({
+          id: "",
+          title: "",
+        });
+      };
 
-    const propsToWrapped: RepoSearchComponent = {
-      input,
-      repoList,
-      selectedRepo,
-      onChangeInput,
-      onRepoClick,
-      onDeleteClick,
-    };
+      //Props to the next hoc
+      const propsToWrapped: RepoSearchComponent = {
+        input,
+        repoList,
+        selectedRepo,
+        githubApi,
+        fetching: false,
+        onChangeInput,
+        onRepoClick,
+        onDeleteClick,
+        setRepoList,
+      };
 
-    return <Wrapped {...propsToWrapped} />;
-  });
+      return <Wrapped {...propsToWrapped} />;
+    }
+  );
 
 export default RepoSearchContainer;
 
-export type { SelectedRepo };
+export type { SelectedRepo, RepoSearchComponent };

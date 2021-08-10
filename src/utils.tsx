@@ -11,6 +11,7 @@ const debounce = (func: Function, cb: Function) => {
 
   return (input: string) => {
     clearTimeout(tm);
+    if (!input) return;
     tm = setTimeout(() => {
       return cb(func(input));
     }, 1000);
