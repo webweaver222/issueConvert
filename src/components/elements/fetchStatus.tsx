@@ -5,12 +5,13 @@ import Spinner from "../elements/spinner";
 const FetchStatus = ({
   render,
   fetching,
-}: //status,
-{
+  status,
+}: {
   render: () => JSX.Element;
   fetching: boolean;
-  //status: string;
+  status: string;
 }) => {
+  console.log(status);
   let content: () => JSX.Element = render;
 
   if (fetching)
@@ -20,7 +21,12 @@ const FetchStatus = ({
       </div>
     );
 
-  //if (status) content = () => <div className="error">Error</div>;
+  if (status)
+    content = () => (
+      <div className="statusWrapper withError">
+        <p>{status}</p>
+      </div>
+    );
 
   return content();
 };

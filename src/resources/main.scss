@@ -72,6 +72,16 @@ input {
 
 .statusWrapper {
   width: 300px;
-  height: 50px;
+  min-height: 50px;
   display: flex;
+}
+
+.statusWrapper.withError {
+  width: auto;
+  min-height: initial;
+  color: rgb(179, 41, 41);
+  padding: 5px;
+  line-height: 20px;
+  text-align: center;
+  background-color: rgb(223, 187, 187);
 }

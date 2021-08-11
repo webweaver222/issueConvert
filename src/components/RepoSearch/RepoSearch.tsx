@@ -13,11 +13,12 @@ const RepoSearch = ({
   repoList,
   selectedRepo,
   fetching,
+  status,
   onChangeInput,
   onRepoClick,
   onDeleteClick,
+  onSelectRepo,
 }: RepoSearchComponent) => {
-  console.log(repoList);
   return (
     <div className="RepoSearchWrapper">
       <div className="main">
@@ -38,11 +39,14 @@ const RepoSearch = ({
           <ul
             style={{
               visibility:
-                repoList.length > 0 || fetching ? "visible" : "hidden",
+                repoList.length > 0 || fetching || status
+                  ? "visible"
+                  : "hidden",
             }}
           >
             <FetchStatus
-              fetching={fetching}
+              fetching={fetching!}
+              status={status!}
               render={() => (
                 <>
                   {repoList.length > 0 &&
@@ -62,6 +66,7 @@ const RepoSearch = ({
           <button
             className="button"
             style={{ display: selectedRepo.id ? "inline-block" : "none" }}
+            onClick={() => onSelectRepo!(selectedRepo.id)}
           >
             Select Repository
           </button>

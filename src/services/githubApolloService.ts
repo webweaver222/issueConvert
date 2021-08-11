@@ -57,6 +57,44 @@ class GithubApolloService {
       },
     });
   };
+
+  getIssues = (id: string) => {
+    return this.client.query({
+      query: gql`
+        query ($id: ID!) {
+          node(id: $id) {
+            ... on Repository {
+              nameWithOwner
+              id
+              issues(
+                first: 5
+                orderBy: { field: CREATED_AT, direction: DESC }
+              ) {
+                edges {
+                  node {
+                    title
+                    id
+                    body
+                    createdAt
+                    comments {
+                      totalCount
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        id,
+      },
+    });
+  };
+
+  getComments = (repoId: string) => {};
+
+  addComment = (issueId: string) => {};
 }
 
 export default GithubApolloService;

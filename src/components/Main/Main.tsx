@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import RepoSearch from "../RepoSearch";
 //import "./Main.scss";
 
 const Main = () => {
+  const [issues, setIssues] = useState<Object | null>(null);
+
+  console.log(issues);
+
   return (
     <div className="MainWrapper">
-      <RepoSearch />
+      <RepoSearch setIssues={(issues: Object) => setIssues(issues)} />
     </div>
   );
 };

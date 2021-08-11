@@ -7,9 +7,10 @@ import { debounce } from "../../utils";
 const withDataFetch =
   (Wrapped: FC<RepoSearchComponent>) => (props: RepoSearchComponent) => {
     //destr some props that we need in here
-    const { input, githubApi, setRepoList } = props;
+    const { input, githubApi, setRepoList, setIssues } = props;
 
     const [fetching, setFetching] = useState(false);
+    const [status, setStatus] = useState("");
 
     //To propeply get data from api:
     // 1. Debouncing the api function
@@ -32,6 +33,7 @@ const withDataFetch =
             )
             .catch((e) => {
               setFetching(false);
+              setStatus(e.message);
             });
         }
       ),
@@ -48,7 +50,22 @@ const withDataFetch =
       }
     }, [input]);
 
-    return <Wrapped {...props} fetching={fetching} />;
+    const onSelectRepo = (id: string) => {
+      console.log(typeof id);
+      githubApi
+        .getIssues(id)
+        .then(({ data }) => setIssues!(data.node))
+        .catch((e) => console.log(e));
+    };
+
+    return (
+      <Wrapped
+        {...props}
+        fetching={fetching}
+        status={status}
+        onSelectRepo={onSelectRepo}
+      />
+    );
   };
 
 export default withDataFetch;
