@@ -80,8 +80,22 @@ input {
   width: auto;
   min-height: initial;
   color: rgb(179, 41, 41);
-  padding: 5px;
   line-height: 20px;
   text-align: center;
   background-color: rgb(223, 187, 187);
+  position: relative;
+  padding: 15px;
+
+  i {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 3;
+    cursor: pointer;
+    color: black;
+
+    &:hover {
+      color: rgb(179, 41, 41);
+    }
+  }
 }

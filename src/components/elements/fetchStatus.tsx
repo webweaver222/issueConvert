@@ -6,10 +6,12 @@ const FetchStatus = ({
   render,
   fetching,
   status,
+  onReset,
 }: {
   render: () => JSX.Element;
   fetching: boolean;
   status: string;
+  onReset: () => void;
 }) => {
   console.log(status);
   let content: () => JSX.Element = render;
@@ -25,6 +27,7 @@ const FetchStatus = ({
     content = () => (
       <div className="statusWrapper withError">
         <p>{status}</p>
+        <i className="fas fa-times" onClick={onReset}></i>
       </div>
     );
 

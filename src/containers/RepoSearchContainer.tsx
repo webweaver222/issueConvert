@@ -19,8 +19,8 @@ interface RepoSearchComponent {
   onRepoClick: (id: string, title: string) => void;
   onDeleteClick: () => void;
   setRepoList: React.Dispatch<React.SetStateAction<never[]>>;
-  onSelectRepo?: (id: string) => void;
-  setIssues?: (data: Object) => void;
+  setStatus?: React.Dispatch<React.SetStateAction<string>>;
+  onFetchRepo?: (id: string) => void;
 }
 
 //Getting api service via hoc with Service Consumer
@@ -28,10 +28,10 @@ const RepoSearchContainer = (Wrapped: FC<RepoSearchComponent>) =>
   compose(withGithubApi)(
     ({
       service: githubApi,
-      setIssues,
+      onFetchRepo,
     }: {
       service: GitgubApolloService;
-      setIssues: () => void;
+      onFetchRepo: (id: string) => void;
     }) => {
       // Component's state
       const [input, setInput] = useState("");
@@ -72,7 +72,7 @@ const RepoSearchContainer = (Wrapped: FC<RepoSearchComponent>) =>
         onRepoClick,
         onDeleteClick,
         setRepoList,
-        setIssues,
+        onFetchRepo,
       };
 
       return <Wrapped {...propsToWrapped} />;

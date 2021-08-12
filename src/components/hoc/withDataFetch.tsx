@@ -7,7 +7,7 @@ import { debounce } from "../../utils";
 const withDataFetch =
   (Wrapped: FC<RepoSearchComponent>) => (props: RepoSearchComponent) => {
     //destr some props that we need in here
-    const { input, githubApi, setRepoList, setIssues } = props;
+    const { input, githubApi, setRepoList, onFetchRepo } = props;
 
     const [fetching, setFetching] = useState(false);
     const [status, setStatus] = useState("");
@@ -50,20 +50,13 @@ const withDataFetch =
       }
     }, [input]);
 
-    const onSelectRepo = (id: string) => {
-      console.log(typeof id);
-      githubApi
-        .getIssues(id)
-        .then(({ data }) => setIssues!(data.node))
-        .catch((e) => console.log(e));
-    };
-
     return (
       <Wrapped
         {...props}
         fetching={fetching}
         status={status}
-        onSelectRepo={onSelectRepo}
+        onFetchRepo={onFetchRepo}
+        setStatus={setStatus}
       />
     );
   };

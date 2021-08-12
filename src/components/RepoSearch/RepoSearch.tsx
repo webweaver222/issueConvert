@@ -17,7 +17,8 @@ const RepoSearch = ({
   onChangeInput,
   onRepoClick,
   onDeleteClick,
-  onSelectRepo,
+  setStatus,
+  onFetchRepo,
 }: RepoSearchComponent) => {
   return (
     <div className="RepoSearchWrapper">
@@ -45,6 +46,7 @@ const RepoSearch = ({
             }}
           >
             <FetchStatus
+              onReset={() => setStatus!("")}
               fetching={fetching!}
               status={status!}
               render={() => (
@@ -66,7 +68,7 @@ const RepoSearch = ({
           <button
             className="button"
             style={{ display: selectedRepo.id ? "inline-block" : "none" }}
-            onClick={() => onSelectRepo!(selectedRepo.id)}
+            onClick={() => onFetchRepo!(selectedRepo.id)}
           >
             Select Repository
           </button>

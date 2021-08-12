@@ -2,7 +2,7 @@ import React from "react";
 
 import { ServiceConsumer } from "../elements/service-provider";
 
-const withGithubApi = (Wrapped: React.FC) => {
+const withGithubApi = (Wrapped: React.FC<any>) => {
   return (props: any) => (
     <ServiceConsumer>
       {(service) => <Wrapped {...props} service={service} />}
