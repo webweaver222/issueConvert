@@ -1,6 +1,7 @@
 import React from "react";
 import Main from "../Main";
 import BGC from "./background";
+
 import "resources/reset.scss";
 import "resources/main.scss";
 

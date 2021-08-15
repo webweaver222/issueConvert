@@ -1,0 +1,122 @@
+{
+  "data": {
+    "node": {
+      "nameWithOwner": "react-dnd/react-dnd",
+      "id": "MDEwOlJlcG9zaXRvcnkyNTQyNzgxNw==",
+      "issues": {
+        "edges": [
+          {
+            "node": {
+              "title": "adding a way for DragSourceMonitor to know what it hovers over",
+              "id": "MDU6SXNzdWU5NjM0NDY4NTU=",
+              "body": "It would be great to easily have access to the drop target(s) that a drag-source item is over.\r\n\r\nIn my case, I would like to modify the drag source DOM (mid-hover) as the user drags the item over various drop targets, or over no drag target.\r\n\r\nThe ideal would be something like:\r\nDragSourceMonitor.hoveringOver() that would return some kind of id or identifier related to the instance of the drop target (or return null if not hovering over anything). Of course, this would mean that the drop target needs an opportunity to provide such information, like an id or an index or something.\r\n\r\nMy current workaround-that-doesn't-really-work is to call a callback function in the drop-targets' :hover function. But in this case, there is no notification/callback when NOT hovering over a target, and I would like to know about that case.",
+              "createdAt": "2021-08-08T14:40:36Z",
+              "comments": {
+                "totalCount": 0
+              }
+            }
+          },
+          {
+            "node": {
+              "title": "SourceType in DragSource, why not support is Identifier[] type?",
+              "id": "MDU6SXNzdWU5NTAyNDMyNTk=",
+              "body": "",
+              "createdAt": "2021-07-22T02:18:32Z",
+              "comments": {
+                "totalCount": 1
+              }
+            }
+          },
+          {
+            "node": {
+              "title": "two question about the sortable example",
+              "id": "MDU6SXNzdWU5NDcxOTM4ODQ=",
+              "body": "**Describe the bug**\r\n\r\n- [https://github.com/react-dnd/react-dnd/blob/main/packages/examples-hooks/src/04-sortable/simple/Container.tsx#L54](https://github.com/react-dnd/react-dnd/blob/main/packages/examples-hooks/src/04-sortable/simple/Container.tsx#L54)\r\n\r\nin this function ,useCallback,Can't get the latest state due to the existence of closures。should use `useRef`.\r\n\r\n\r\n- [https://github.com/react-dnd/react-dnd/blob/main/packages/examples-hooks/src/04-sortable/simple/Card.tsx#L81](https://github.com/react-dnd/react-dnd/blob/main/packages/examples-hooks/src/04-sortable/simple/Card.tsx#L81)\r\n\r\nI need to use isDragging to correctly apply styles。In fact it doesn’t seem to be the case\r\n\r\n![image](https://user-images.githubusercontent.com/9313216/126093007-85d07de6-db1c-4cbd-b310-ad4f5b0fb184.png)\r\n\r\n\r\nsame as [3120](https://github.com/react-dnd/react-dnd/issues/3120)",
+              "createdAt": "2021-07-19T02:12:55Z",
+              "comments": {
+                "totalCount": 0
+              }
+            }
+          },
+          {
+            "node": {
+              "title": "On Windows, Drag Preview would be in the wrong location (relative to cursor) if preview ref is smaller than drag ref",
+              "id": "MDU6SXNzdWU5NDQ3ODE4MjE=",
+              "body": "**Describe the bug**\r\nCan't reproduce this on Chrome/OSX Safari/OSX. However, on Chrome/Windows and Edge/Windows\r\n\r\n**Reproduction**\r\n\r\nSee: https://codesandbox.io/s/interesting-faraday-2hcce?file=/src/Box.tsx:444-451\r\n\r\nSteps to reproduce the behavior:\r\n\r\n1. Drag on the tip of the boxes.\r\n2. On Windows, the drag source does not go to the mouse.\r\n\r\n**Expected behavior**\r\n\r\nExpect the drag preview to quickly move towards the mouse.\r\nsee: \r\n![Drag Preview](https://user-images.githubusercontent.com/3210756/125690245-5a171d13-01f3-40d1-a25b-66cda0041774.gif)\r\n\r\n\r\n**Screenshots**\r\nIf applicable, add screenshots to help explain your problem.\r\n\r\n**Desktop (please complete the following information):**\r\n\r\n- OS: [e.g. iOS]\r\n- Browser [e.g. chrome, safari]\r\n- Version [e.g. 22]\r\n\r\n**Additional context**\r\nAdd any other context about the problem here.\r\n",
+              "createdAt": "2021-07-14T20:43:05Z",
+              "comments": {
+                "totalCount": 0
+              }
+            }
+          },
+          {
+            "node": {
+              "title": "Multiple DndProviders inside a pure component can lead to `Cannot have two HTML5 backends at the same time`",
+              "id": "MDU6SXNzdWU5NDQ1ODU5MTk=",
+              "body": "**Describe the bug**\r\n\r\nUsing two `<DndProvider backend={HTML5Backend}>` inside a `React.PureComponent` (which updates only if props change), can under certain conditions lead to an error like:\r\n```\r\nError: Cannot have two HTML5 backends at the same time.\r\n\t    at HTML5BackendImpl.setup node_modules/react-dnd-html5-backend/dist/esm/HTML5BackendImpl.js:423\r\n\t    at DragDropManagerImpl.handleRefCountChange node_modules/dnd-core/dist/esm/classes/DragDropManagerImpl.js:21\r\n\t    at Object.dispatch node_modules/redux/es/redux.js:297\r\n\t    at HandlerRegistryImpl.addSource node_modules/dnd-core/dist/esm/classes/HandlerRegistryImpl.js:92\r\n\t    at registerSource node_modules/react-dnd/dist/esm/internals/registration.js:10\r\n\t    at registerDragSource node_modules/react-dnd/dist/esm/hooks/useDrag/useRegisteredDragSource.js:24\r\n\t    at commitHookEffectListMount node_modules/react-dom/cjs/react-dom.development.js:20573\r\n\t    at commitLifeCycles node_modules/react-dom/cjs/react-dom.development.js:20634\r\n\t    at commitLayoutEffects node_modules/react-dom/cjs/react-dom.development.js:23426\r\n\t    at HTMLUnknownElement.callCallback node_modules/react-dom/cjs/react-dom.development.js:3945\r\n\t    at Object.invokeGuardedCallbackDev node_modules/react-dom/cjs/react-dom.development.js:3994\r\n\t    at invokeGuardedCallback node_modules/react-dom/cjs/react-dom.development.js:4056\r\n\t    at commitRootImpl node_modules/react-dom/cjs/react-dom.development.js:23151\r\n\t    at unstable_runWithPriority node_modules/scheduler/cjs/scheduler.development.js:468\r\n\t    at runWithPriority$1 node_modules/react-dom/cjs/react-dom.development.js:11276\r\n\t    at commitRoot node_modules/react-dom/cjs/react-dom.development.js:22990\r\n```\r\n\r\n**Reproduction**\r\n\r\nThis is the smallest reproducing example I was able to come up with:\r\nhttps://codepen.io/dcsaszar/pen/ZEKLVVJ\r\n\r\nIt describes basically what happens in one of our apps: Inside a `PureComponent`-like component (we have our own abstraction, but with a similar implementation of `shouldComponentUpdate`), we have a single `read-only` (this is a prop, in the example: `foo`) DnD component, which later is dynamically replaced by a single `read-write` DnD component, and then joined by a 2nd DnD component.\r\n\r\nSteps to reproduce the behavior:\r\n\r\n1. Go to https://codepen.io/dcsaszar/pen/ZEKLVVJ\r\n2. See the error in the browser console\r\n\r\n**Expected behavior**\r\n\r\n* No error.\r\n* The components should render successfully.\r\n\r\n**Desktop**\r\n\r\n- Browser: Chrome\r\n- Version:\r\n  - react 17.0.2\r\n  - react-dnd: 14.0.2\r\n  - react-dnd-html5-backend: 14.0.0\r\n\r\n**Related**\r\n#1558\r\n#3119\r\n#3178\r\n\r\nSince I wasn't sure which/if any of the above qualifies for duplicate, I created a fresh issue.\r\n",
+              "createdAt": "2021-07-14T16:09:06Z",
+              "comments": {
+                "totalCount": 0
+              }
+            }
+          },
+          {
+            "node": {
+              "title": "Removing a dropped item",
+              "id": "MDU6SXNzdWU5NDM0MTkzODk=",
+              "body": "Hi all, we've implemented a drag and drop with react-dnd. In our case we have multiple draggable items from which a single item can be dragged into the drop area. However, we need to be able to remove the dropped item too. I've looked through the docs (and Github issues) and did not find any way to remove it. Is there a way a dropped item can be removed too?",
+              "createdAt": "2021-07-13T13:54:32Z",
+              "comments": {
+                "totalCount": 0
+              }
+            }
+          },
+          {
+            "node": {
+              "title": "Custom my own context in DndProvider has an error tip",
+              "id": "MDU6SXNzdWU5NDE0ODA1ODY=",
+              "body": "**Describe the bug**\r\n\r\nWhen I pass a custom property \"context\" to  DndProvider component, I meet an error. \r\n\r\n\r\n**my code** \r\n![image](https://user-images.githubusercontent.com/9053195/125201343-4a5aaa80-e2a1-11eb-9175-64173392484d.png)\r\n\r\n**error tips** \r\n![image](https://user-images.githubusercontent.com/9053195/125201219-b38dee00-e2a0-11eb-95a1-ce9348509580.png)\r\n\r\nand then I find, the rootElement has changed to be my custom context, so it is an error\r\n\r\n![image](https://user-images.githubusercontent.com/9053195/125201440-c2c16b80-e2a1-11eb-8be8-220f6c4d84d9.png)\r\n\r\n",
+              "createdAt": "2021-07-11T15:47:10Z",
+              "comments": {
+                "totalCount": 0
+              }
+            }
+          },
+          {
+            "node": {
+              "title": "TypeError: (0 , _reactDndTestUtils.wrapInTestContext) is not a function or its return value is not iterable",
+              "id": "MDU6SXNzdWU5NDE0NjA5NjE=",
+              "body": "Hi\r\n\r\nI am written test cases for drag & drop options using React DND. I am getting below error\r\nTypeError: (0 , _reactDndTestUtils.wrapInTestContext) is not a function or its return value is not iterable\r\n\r\n**My Expectations**\r\nI need to write a test case for drag and drop options and check the clientOffset as well.\r\nIf I made mistakes please correct me.\r\nNote : I am using React without Typescript\r\nThanks in advance\r\n\r\n**Code :**\r\nimport React from 'react'\r\nimport { wrapInTestContext } from 'react-dnd-test-utils'\r\nimport { DragDropContext } from 'react-dnd'\r\nimport TestUtils from 'react-dom/test-utils'\r\nimport App from './components/App'\r\n\r\nit('can be tested with the testing backend', () => {\r\n    const [BoxContext] = wrapInTestContext(App)\r\n    const ref = React.createRef()\r\n    const root = Enzyme.mount(\r\n    <>\r\n        <BoxContext ref={ref} name=\"test\" />\r\n    </>\r\n    )\r\n    const backend = ref.current.getManager().getBackend()\r\n\r\n})\r\n\r\nit('can be tested with the testing backend', () => {\r\n    // Render with the test context that uses the test backend\r\n    const [BoxContext, getBackend] = wrapInTestContext(App)\r\n    const root = TestUtils.renderIntoDocument(<BoxContext name=\"test\" />)\r\n  \r\n    // Test that the opacity is 1\r\n    let div = TestUtils.findRenderedDOMComponentWithTag(root, 'div')\r\n    expect(div.props.style.opacity).toEqual(1)\r\n  \r\n    // Find the drag source ID and use it to simulate the dragging operation\r\n    const box = TestUtils.findRenderedComponentWithType(root, Box)\r\n    getBackend().simulateBeginDrag([box.getHandlerId()])\r\n  \r\n    // Verify that the div changed its opacity\r\n    div = TestUtils.findRenderedDOMComponentWithTag(root, 'div')\r\n    expect(div.style.opacity).toEqual(0.4)\r\n  \r\n    // See other TestBackend.simulate* methods for more!\r\n  })\r\n\r\n**I got the code from react dnd URL** - https://react-dnd.github.io/react-dnd/docs/testing\r\n**I am using this below versions**\r\nReact Version - 16.14.0\r\nreact-dnd-html5-backend -  14.0.0\r\nreact-dnd-test-utils - ^14.0.0\r\n\r\nKindly find the screen shot\r\n![image](https://user-images.githubusercontent.com/41969877/125198361-330ac580-e27f-11eb-9b27-c9a711023cff.png)",
+              "createdAt": "2021-07-11T14:10:13Z",
+              "comments": {
+                "totalCount": 1
+              }
+            }
+          },
+          {
+            "node": {
+              "title": "Error: 'jsx' is not exported by ../../node_modules/react/jsx-runtime.js",
+              "id": "MDU6SXNzdWU5NDAxMDk1MzY=",
+              "body": "**Describe the bug**\r\nI got this error when building:\r\n`Error: 'jsx' is not exported by ../../node_modules/react/jsx-runtime.js, imported by ../../node_modules/react-dnd/dist/esm/core/DndProvider.js`\r\n \r\ni've added this to rollup.config.js\r\n ```\r\nplugins: [\r\n    commonjs({\r\n        include: '../../node_modules/**',\r\n        namedExports: {\r\n            '../../node_modules/react/jsx-runtime.js': ['jsx']\r\n        }\r\n    }),\r\n]\r\n ```\r\n \r\n**Reproduction**\r\nreact.js version: 17.0.2\r\nreact-dnd version: 14.0.2\r\ntypescript version: 4.2.4\r\n",
+              "createdAt": "2021-07-08T18:18:56Z",
+              "comments": {
+                "totalCount": 1
+              }
+            }
+          },
+          {
+            "node": {
+              "title": "doc website is broken....",
+              "id": "MDU6SXNzdWU5Mzk2ODIyODM=",
+              "body": "![image](https://user-images.githubusercontent.com/9404132/124902547-9b566e80-e015-11eb-948d-b605eb19f1be.png)",
+              "createdAt": "2021-07-08T09:53:51Z",
+              "comments": {
+                "totalCount": 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

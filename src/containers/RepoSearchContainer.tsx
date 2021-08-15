@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import GitgubApolloService from "../services/githubApolloService";
-import { withGithubApi } from "../components/hoc/withService";
+import { withData as withGithubApi } from "../components/hoc/withData";
 import { compose } from "../utils";
 
 interface SelectedRepo {

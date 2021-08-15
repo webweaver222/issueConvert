@@ -1,0 +1,46 @@
+.IssuesListWrapper {
+  width: 40%;
+  padding: 10px;
+  margin: 20px 0 20px 10px;
+  overflow-y: auto;
+  border: 1px solid blue;
+  .issueItem {
+    overflow: hidden;
+    padding: 10px;
+    height: 70px;
+    border: 1px solid black;
+    margin: 10px 0;
+    h2 {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    div {
+      margin-top: 7px;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+  }
+
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: #2337e7;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: transparent;
+  }
+}
