@@ -1,15 +1,31 @@
-.IssuesListWrapper {
+.issueListContainer {
   width: 40%;
-  padding: 10px;
-  margin: 20px 0 20px 10px;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  .lw {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+  }
+}
+
+.IssuesListWrapper {
   overflow-y: auto;
-  border: 1px solid blue;
+  border: 1px solid black;
+  position: relative;
+
+  .issueList {
+    padding: 0 10px;
+  }
+
   .issueItem {
     overflow: hidden;
-    padding: 10px;
-    height: 70px;
+    height: 120px;
     border: 1px solid black;
-    margin: 10px 0;
     h2 {
       font-size: 16px;
       font-weight: bold;
@@ -24,7 +40,7 @@
 
   &:hover {
     &::-webkit-scrollbar-thumb {
-      background: #2337e7;
+      background: black;
     }
   }
 

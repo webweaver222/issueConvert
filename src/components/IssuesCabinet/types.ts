@@ -13,6 +13,7 @@ interface IssuesItem {
     id: string;
     createdAt: string;
   };
+  cursor: string;
 }
 
-export type { IssuesData };
+export type { IssuesData, IssuesItem };

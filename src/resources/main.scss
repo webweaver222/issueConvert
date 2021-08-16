@@ -7,6 +7,12 @@ html {
   }
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 @font-face {
   font-family: "montserrat";
   src: url("./fonts/Montserrat-Regular.ttf") format("truetype");

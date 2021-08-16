@@ -17,7 +17,7 @@ const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
 
   console.log(data);
 
-  useEffect(() => {
+  /*useEffect(() => {
     setFetching(true);
 
     githubApi
@@ -30,7 +30,7 @@ const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
         setFetching(false);
         setStatus(e.message);
       });
-  }, []);
+  }, []);*/
 
   const fetchRepo = (id: string) => {
     setFetching(true);

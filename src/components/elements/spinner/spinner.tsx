@@ -13,7 +13,11 @@ const Spinner = ({
   return (
     <div
       className="spinner"
-      style={{ width, height, backgroundColor: color }}
+      style={{
+        width: width + "px",
+        height: height + "px",
+        backgroundColor: color,
+      }}
     ></div>
   );
 };
