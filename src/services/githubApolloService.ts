@@ -61,15 +61,15 @@ class GithubApolloService {
   getIssues = (id: string, cursor?: string) => {
     return this.client.query({
       query: gql`
-        query ($id: ID!, $cursor: String!) {
+        query getIssues($id: ID!, $cursor: String, $qnty: Int!) {
           node(id: $id) {
             ... on Repository {
               nameWithOwner
               id
               issues(
-                first: ${cursor ? "5" : "10"}
+                first: $qnty
                 orderBy: { field: CREATED_AT, direction: DESC }
-                after: ${cursor ? "$cursor" : "null"}
+                after: $cursor
               ) {
                 edges {
                   node {
@@ -91,6 +91,7 @@ class GithubApolloService {
       variables: {
         id,
         cursor,
+        qnty: cursor ? 5 : 10,
       },
     });
   };

@@ -5,10 +5,10 @@ import GithubApolloService from "./services/githubApolloService";
 
 import App from "./components/app";
 
-const service = new GithubApolloService();
+const api = new GithubApolloService();
 
 ReactDom.render(
-  <ServiceProvider value={service}>
+  <ServiceProvider value={api}>
     <App />
   </ServiceProvider>,
   document.getElementById("root")

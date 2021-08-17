@@ -21,7 +21,7 @@ const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
     setFetching(true);
 
     githubApi
-      .getImmidiate()
+      .getIssues("MDEwOlJlcG9zaXRvcnk2NTc5NDI5Mg==")
       .then(({ data }) => {
         setFetching(false);
         setData(data.node);
@@ -58,7 +58,7 @@ const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
       {(data || status || fetching) && (
         <FetchStatus
           render={() => (
-            <ServiceProvider value={data!}>
+            <ServiceProvider value={{ data, githubApi }}>
               <IssuesCabinet />
             </ServiceProvider>
           )}
