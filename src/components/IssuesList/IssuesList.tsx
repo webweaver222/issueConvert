@@ -1,23 +1,29 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import { compose } from "../../utils";
 import useDidUpdateEffect from "../customHooks/didUpdateEffect";
 import { withData as withIssues } from "../hoc/withData";
 import { IssuesData, IssuesItem } from "../IssuesCabinet/types";
 import { withData } from "../hoc/withData";
 import GithubApolloService from "../../services/githubApolloService";
+import { debounceScroll } from "../../utils";
+import { ApolloQueryResult } from "@apollo/client";
 import Spinner from "../elements/spinner";
 import "./IssuesList.scss";
 
-const IssuesList = (props: any) => {
-  const {
-    service: { data, githubApi },
-  }: {
-    service: {
-      data: IssuesData;
-      githubApi: GithubApolloService;
-    };
-  } = props;
-
+const IssuesList = ({
+  service: { data, githubApi },
+}: {
+  service: {
+    data: IssuesData;
+    githubApi: GithubApolloService;
+  };
+}) => {
   const {
     id,
     nameWithOwner,
@@ -41,6 +47,33 @@ const IssuesList = (props: any) => {
     [moreIssues.length]
   );
 
+  const debounced = useCallback(
+    debounceScroll(
+      githubApi.getIssues,
+      (response: Promise<ApolloQueryResult<any>>) => {
+        response
+          .then(
+            ({
+              data: { node: evenMoreIssues },
+            }: {
+              data: { node: IssuesData };
+            }) => {
+              setMoreIssues((moreIssues) => [
+                ...moreIssues,
+                ...evenMoreIssues.issues.edges,
+              ]);
+              setFetching(false);
+            }
+          )
+          .catch((e) => {
+            //setFetching(false);
+            console.log(e);
+          });
+      }
+    ),
+    [githubApi.getIssues]
+  );
+
   useEffect(() => {
     const handler = (e: any) => setScroll(e.target!.scrollTop);
 
@@ -54,22 +87,15 @@ const IssuesList = (props: any) => {
       scroll + wrapper.current!.offsetHeight + 0 >
       list.current!.offsetHeight
     ) {
-      if (!fetching)
-        githubApi
-          .getIssues(id, cursor)
-          .then(({ data }) => {
-            const more: IssuesData = data.node;
-            setFetching(false);
-            console.log(more.issues);
-            setMoreIssues(more.issues.edges);
-          })
-          .catch((e) => {
-            setFetching(false);
-            console.log(e.message);
-          });
+      if (!fetching) {
+        const id2 = "ds" + id;
+        debounced(id2, cursor);
+      }
 
-      setFetching(true);
+      return setFetching(true);
     }
+
+    return setFetching(false);
   }, [scroll]);
 
   const spinner = fetching && (
@@ -82,14 +108,14 @@ const IssuesList = (props: any) => {
     <div className="issueListContainer">
       <div className="IssuesListWrapper" ref={wrapper}>
         <div className="issueList" ref={list}>
-          {issues.map((issue, i) => (
-            <div className="issueItem" key={i}>
+          {issues.map((issue) => (
+            <div className="issueItem" key={issue.node.id}>
               <h2>{issue.node.title}</h2>
               <p>{issue.node.body}</p>
             </div>
           ))}
-          {moreIssues.map((issue, i) => (
-            <div className="issueItem" key={i}>
+          {moreIssues.map((issue) => (
+            <div className="issueItem" key={issue.node.id}>
               <h2>{issue.node.title}</h2>
               <p>{issue.node.body}</p>
             </div>

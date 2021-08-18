@@ -6,7 +6,7 @@ const compose =
     return funcs.reduceRight((wrapped, func) => func(wrapped), comp);
   };
 
-const debounce = (func: Function, cb: Function) => {
+const debounceSearch = (func: Function, cb: Function) => {
   let tm: NodeJS.Timeout;
 
   return (input: string) => {
@@ -18,4 +18,15 @@ const debounce = (func: Function, cb: Function) => {
   };
 };
 
-export { compose, debounce };
+const debounceScroll = (func: Function, cb: Function) => {
+  let tm: NodeJS.Timeout;
+
+  return (id: string, cursor: string) => {
+    clearTimeout(tm);
+    tm = setTimeout(() => {
+      return cb(func(id, cursor));
+    }, 1000);
+  };
+};
+
+export { compose, debounceSearch, debounceScroll };

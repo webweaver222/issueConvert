@@ -17,11 +17,11 @@ const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
 
   console.log(data);
 
-  /*useEffect(() => {
+  useEffect(() => {
     setFetching(true);
 
     githubApi
-      .getIssues("MDEwOlJlcG9zaXRvcnk2NTc5NDI5Mg==")
+      .getIssues("MDEwOlJlcG9zaXRvcnkyNTQyNzgxNw==")
       .then(({ data }) => {
         setFetching(false);
         setData(data.node);
@@ -30,7 +30,7 @@ const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
         setFetching(false);
         setStatus(e.message);
       });
-  }, []);*/
+  }, []);
 
   const fetchRepo = (id: string) => {
     setFetching(true);

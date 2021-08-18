@@ -2,7 +2,7 @@ import React, { useState, useCallback, FC } from "react";
 import didUpdateEffect from "../customHooks/didUpdateEffect";
 import { ApolloQueryResult } from "../../services/githubApolloService";
 import { RepoSearchComponent } from "../../containers/RepoSearchContainer";
-import { debounce } from "../../utils";
+import { debounceSearch } from "../../utils";
 
 const withDataFetch =
   (Wrapped: FC<RepoSearchComponent>) => (props: RepoSearchComponent) => {
@@ -17,7 +17,7 @@ const withDataFetch =
     // 2. Providing callback function to aquire the response
     // 3. Using useCallback hook to prevent creating new contexts
     const debounced = useCallback(
-      debounce(
+      debounceSearch(
         githubApi.getRepos,
         (response: Promise<ApolloQueryResult<any>>) => {
           response

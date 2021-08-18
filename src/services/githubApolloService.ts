@@ -67,6 +67,7 @@ class GithubApolloService {
               nameWithOwner
               id
               issues(
+                states: OPEN
                 first: $qnty
                 orderBy: { field: CREATED_AT, direction: DESC }
                 after: $cursor
@@ -93,38 +94,6 @@ class GithubApolloService {
         cursor,
         qnty: cursor ? 5 : 10,
       },
-    });
-  };
-
-  getImmidiate = () => {
-    return this.client.query({
-      query: gql`
-        query {
-          node(id: "MDEwOlJlcG9zaXRvcnk2NTc5NDI5Mg==") {
-            ... on Repository {
-              nameWithOwner
-              id
-              issues(
-                first: 10
-                orderBy: { field: CREATED_AT, direction: DESC }
-              ) {
-                edges {
-                  node {
-                    title
-                    id
-                    body
-                    createdAt
-                    comments {
-                      totalCount
-                    }
-                  }
-                  cursor
-                }
-              }
-            }
-          }
-        }
-      `,
     });
   };
 
