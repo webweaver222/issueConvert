@@ -8,7 +8,7 @@ import { ServiceProvider } from "../elements/service-provider";
 import GitgubApolloService from "../../services/githubApolloService";
 import "./Main.scss";
 
-//import json from "../../../try.json";
+import json from "../../../try.json";
 
 const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
   const [data, setData] = useState(null);
@@ -30,6 +30,8 @@ const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
         setFetching(false);
         setStatus(e.message);
       });
+
+    //setData(json.data.node);
   }, []);
 
   const fetchRepo = (id: string) => {

@@ -1,3 +1,4 @@
+import { StringifyOptions } from "querystring";
 import { FC } from "react";
 
 const compose =
@@ -21,7 +22,7 @@ const debounceSearch = (func: Function, cb: Function) => {
 const debounceScroll = (func: Function, cb: Function) => {
   let tm: NodeJS.Timeout;
 
-  return (id: string, cursor: string) => {
+  return (id: string, cursor: StringifyOptions) => {
     clearTimeout(tm);
     tm = setTimeout(() => {
       return cb(func(id, cursor));
