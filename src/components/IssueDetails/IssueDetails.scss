@@ -1,3 +1,6 @@
 .IssueDetailsWrapper {
   flex: 1;
+  .IssueText {
+    white-space: pre-line;
+  }
 }

@@ -97,7 +97,40 @@ class GithubApolloService {
     });
   };
 
-  getComments = (repoId: string) => {};
+  /**  
+  } */
+
+  getComments = (issueId: string) => {
+    return this.client.query({
+      query: gql`
+        query getComments($id: ID!) {
+          node(id: $id) {
+            ... on Issue {
+              body
+              title
+              comments(first: 10) {
+                edges {
+                  cursor
+                  node {
+                    body
+                    author {
+                      avatarUrl(size: 30)
+                      login
+                    }
+                    createdAt
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        id: issueId,
+      },
+    });
+  };
 
   addComment = (issueId: string) => {};
 }
