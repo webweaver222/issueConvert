@@ -1,6 +1,21 @@
 .IssueDetailsWrapper {
   flex: 1;
-  .IssueText {
-    white-space: pre-line;
+  display: flex;
+  min-height: 100vh;
+
+  .statusWrapper {
+    margin: auto;
+  }
+
+  .IssueTextWrapper {
+    margin: 0 auto;
+    height: 40%;
+    width: 99%;
+    overflow: auto;
+    border: 1px solid black;
+    padding: 8px;
+    .IssueText {
+      white-space: pre-line;
+    }
   }
 }

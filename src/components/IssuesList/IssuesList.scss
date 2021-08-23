@@ -19,7 +19,7 @@
   position: relative;
 
   .issueList {
-    padding: 0 10px;
+    padding: 0 3px 0 10px;
   }
 
   .issueItem {
@@ -36,27 +36,5 @@
       font-size: 14px;
       white-space: pre-line;
     }
-  }
-
-  &:hover {
-    &::-webkit-scrollbar-thumb {
-      background: black;
-    }
-  }
-
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: transparent;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background: transparent;
   }
 }

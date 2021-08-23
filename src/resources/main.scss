@@ -106,3 +106,27 @@ input {
     }
   }
 }
+
+.fancyScrollBar {
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: black;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: transparent;
+  }
+}

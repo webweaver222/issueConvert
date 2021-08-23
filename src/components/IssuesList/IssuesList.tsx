@@ -23,7 +23,7 @@ const IssuesList = ({
 
   return (
     <div className="issueListContainer">
-      <div className="IssuesListWrapper" ref={wrapper}>
+      <div className="IssuesListWrapper fancyScrollBar" ref={wrapper}>
         <div className="issueList" ref={list}>
           {issues!.map((issue) => (
             <div
