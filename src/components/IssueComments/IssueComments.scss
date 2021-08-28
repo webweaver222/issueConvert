@@ -1,0 +1,12 @@
+.IssueCommentsWrapper {
+  flex: 1;
+  overflow-y: auto;
+  .IssueCommentsList {
+    padding: 4px;
+    .IssueComment {
+      margin: 10px 0;
+      border: 1px solid black;
+      height: 100px; //adjust  for big screens
+    }
+  }
+}

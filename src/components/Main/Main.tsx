@@ -21,7 +21,7 @@ const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
     setFetching(true);
 
     githubApi
-      .getIssues("MDEwOlJlcG9zaXRvcnkyNTQyNzgxNw==")
+      .getIssues("MDEwOlJlcG9zaXRvcnkyMzY4MzI2MTM==")
       .then(({ data }) => {
         setFetching(false);
         setData(data.node);

@@ -1,29 +1,31 @@
-import React, { useEffect, useState, FC, useRef } from "react";
+import React, { useEffect, useState, FC, useRef, RefObject } from "react";
 import useDidUpdateEffect from "../customHooks/didUpdateEffect";
 
 import { IssuesListComponent } from "../../containers/IssueListContainer";
+import { IssueDetailsComponent } from "../../containers/IssueDetailsContainer";
 
 interface InfiniteScrollProps {
   fetchedItems: Array<any>;
   lastItemId: string;
   entityId: string;
   fetchFunction: Function;
+  wrapper: RefObject<HTMLDivElement>;
+  list: RefObject<HTMLDivElement>;
 }
 
 const withInfiniteScroll =
-  (Wrapped: FC<IssuesListComponent>) => (props: InfiniteScrollProps) => {
-    const { fetchedItems, fetchFunction, entityId, lastItemId } = props;
-
-    const wrapper = useRef<HTMLDivElement>(null);
-    const list = useRef<HTMLDivElement>(null);
+  (Wrapped: FC<IssuesListComponent | IssueDetailsComponent>) =>
+  (props: InfiniteScrollProps) => {
+    const { fetchedItems, fetchFunction, entityId, lastItemId, wrapper, list } =
+      props;
 
     const [scroll, setScroll] = useState(0);
-
+    console.log(scroll);
     const [fetching, setFetching] = useState(false);
 
-    useEffect(() => {
-      const handler = (e: any) => setScroll(e.target!.scrollTop);
+    const handler = (e: any) => setScroll(e.target!.scrollTop);
 
+    useEffect(() => {
       if (wrapper) wrapper.current?.addEventListener("scroll", handler);
 
       return () => wrapper.current?.removeEventListener("scroll", handler);

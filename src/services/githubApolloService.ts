@@ -100,15 +100,19 @@ class GithubApolloService {
   /**  
   } */
 
-  getComments = (issueId: string) => {
+  getComments = (issueId: string, cursor?: string) => {
     return this.client.query({
       query: gql`
-        query getComments($id: ID!) {
+        query getComments($id: ID!, $cursor: String, $qnty: Int!) {
           node(id: $id) {
             ... on Issue {
               body
               title
-              comments(first: 10) {
+              comments(
+                first: $qnty
+                after: $cursor
+                orderBy: { field: UPDATED_AT, direction: DESC }
+              ) {
                 edges {
                   cursor
                   node {
@@ -128,6 +132,8 @@ class GithubApolloService {
       `,
       variables: {
         id: issueId,
+        cursor,
+        qnty: cursor ? 2 : 5,
       },
     });
   };

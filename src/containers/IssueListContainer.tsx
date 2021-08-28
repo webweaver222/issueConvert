@@ -1,4 +1,4 @@
-import React, { RefObject, FC, useState, useMemo, useCallback } from "react";
+import React, { useRef, FC, useState, useMemo, useCallback } from "react";
 import { IssuesData } from "../components/IssuesCabinet/types";
 
 import GithubApolloService from "../services/githubApolloService";
@@ -14,8 +14,6 @@ interface IssuesListComponent extends InfiniteScrollProps {
   nameWithOwner?: string;
   issues?: IssuesItem[];
   fetching?: boolean;
-  wrapper?: RefObject<HTMLDivElement> | undefined;
-  list?: RefObject<HTMLDivElement> | undefined;
   fetchedItems: IssuesItem[];
   onIssueClick: Function;
 }
@@ -38,6 +36,8 @@ const IssueListContainer = (Wrapped: FC<IssuesListComponent>) =>
         issues: { edges: issues },
       } = data;
 
+      const wrapper = useRef(null);
+      const list = useRef(null);
       const [moreIssues, setMoreIssues] = useState<IssuesItem[]>([]);
 
       const cursor = useMemo(
@@ -73,16 +73,16 @@ const IssueListContainer = (Wrapped: FC<IssuesListComponent>) =>
         [githubApi.getIssues]
       );
 
-      const IssueClick = (id: string) => {};
-
       const propsToWrapped: IssuesListComponent = {
         nameWithOwner,
         issues,
+        fetchedItems: moreIssues,
         lastItemId: cursor,
         entityId: id,
         fetchFunction: debounced,
-        fetchedItems: moreIssues,
         onIssueClick: onIssueClick,
+        wrapper,
+        list,
       };
 
       return <Wrapped {...propsToWrapped} />;

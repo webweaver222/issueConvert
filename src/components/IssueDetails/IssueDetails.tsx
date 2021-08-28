@@ -2,34 +2,44 @@ import React from "react";
 import IssueDetailsContainer, {
   IssueDetailsComponent,
 } from "../../containers/IssueDetailsContainer";
+import IssueComments from "../IssueComments";
 import FetchStatus from "../elements/fetchStatus";
+import withInfiniteScroll from "../hoc/withInfiniteScroll";
+import { compose } from "../../utils";
 import "./IssueDetails.scss";
 
-const IssueDetails = ({ data, fetching }: IssueDetailsComponent) => {
+const IssueDetails = ({
+  issueText,
+  fetching,
+  comments,
+  fetchedItems: moreComments,
+  wrapper,
+  list,
+}: IssueDetailsComponent) => {
   return (
     <div className="IssueDetailsWrapper">
       <FetchStatus
         onReset={() => {}}
         status=""
         fetching={fetching}
-        render={
-          () => (
-            <>
-              <div className="IssueTextWrapper fancyScrollBar">
-                <p className="IssueText">{data?.node.body}</p>
-              </div>
-            </>
-          )
-          /* <IssueComments/> //withInfiniteScroll
-           * <CommentInput />
-           *
-           *
-           *
-           */
-        }
+        render={() => (
+          <>
+            <div className="IssueTextWrapper fancyScrollBar">
+              <p className="IssueText">{issueText}</p>
+            </div>
+            {
+              <IssueComments
+                comments={comments}
+                moreComments={moreComments}
+                wrapper={wrapper}
+                list={list}
+              />
+            }
+          </>
+        )}
       />
     </div>
   );
 };
 
-export default IssueDetailsContainer(IssueDetails);
+export default compose(IssueDetailsContainer, withInfiniteScroll)(IssueDetails);
