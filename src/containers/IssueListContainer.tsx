@@ -1,4 +1,4 @@
-import React, { useRef, FC, useState, useMemo, useCallback } from "react";
+import React, { RefObject, FC, useState, useMemo, useCallback } from "react";
 import { IssuesData } from "../components/IssuesCabinet/types";
 
 import GithubApolloService from "../services/githubApolloService";
@@ -13,9 +13,11 @@ import { debounceScroll } from "../utils";
 interface IssuesListComponent extends InfiniteScrollProps {
   nameWithOwner?: string;
   issues?: IssuesItem[];
-  fetching?: boolean;
+  scrollFetching?: boolean;
   fetchedItems: IssuesItem[];
   onIssueClick: Function;
+  wrapper?: RefObject<HTMLDivElement>;
+  list?: RefObject<HTMLDivElement>;
 }
 
 const IssueListContainer = (Wrapped: FC<IssuesListComponent>) =>
@@ -36,8 +38,6 @@ const IssueListContainer = (Wrapped: FC<IssuesListComponent>) =>
         issues: { edges: issues },
       } = data;
 
-      const wrapper = useRef(null);
-      const list = useRef(null);
       const [moreIssues, setMoreIssues] = useState<IssuesItem[]>([]);
 
       const cursor = useMemo(
@@ -81,8 +81,6 @@ const IssueListContainer = (Wrapped: FC<IssuesListComponent>) =>
         entityId: id,
         fetchFunction: debounced,
         onIssueClick: onIssueClick,
-        wrapper,
-        list,
       };
 
       return <Wrapped {...propsToWrapped} />;

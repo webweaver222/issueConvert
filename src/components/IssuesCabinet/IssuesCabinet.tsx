@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import IssuesList from "../IssuesList";
 import IssueDetails from "../IssueDetails/IssueDetails";
 import "./IssuesCabinet.scss";
-
-const IssuesCabinet = () => {
-  const [currentIssueId, setCurrentIssue] = useState("");
+import { IssuesItem } from "./types";
+const IssuesCabinet = ({
+  initialData: {
+    issues: { edges: issues },
+  },
+}: {
+  initialData: { issues: { edges: IssuesItem[] } };
+}) => {
+  const [currentIssueId, setCurrentIssue] = useState(issues[0].node.id);
 
   return (
     <div className="IssueCabinetWrapper">

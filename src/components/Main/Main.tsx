@@ -11,62 +11,64 @@ import "./Main.scss";
 import json from "../../../try.json";
 
 const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
-  const [data, setData] = useState(null);
+  /*const [data, setData] = useState(null);
   const [fetching, setFetching] = useState(false);
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("");*/
 
-  console.log(data);
+  const [state, setState] = useState<{
+    data: any;
+    fetching: boolean;
+    status: string;
+  }>({
+    data: null,
+    fetching: false,
+    status: "",
+  });
 
   useEffect(() => {
-    setFetching(true);
+    setState((state) => ({ ...state, fetching: true }));
 
     githubApi
       .getIssues("MDEwOlJlcG9zaXRvcnkyMzY4MzI2MTM==")
       .then(({ data }) => {
-        setFetching(false);
-        setData(data.node);
+        setState({ ...state, data: data.node, fetching: false });
       })
       .catch((e) => {
-        setFetching(false);
-        setStatus(e.message);
+        setState({ ...state, status: e.message, fetching: false });
       });
-
-    //setData(json.data.node);
   }, []);
 
   const fetchRepo = (id: string) => {
-    setFetching(true);
+    setState((state) => ({ ...state, fetching: true }));
 
     githubApi
       .getIssues(id)
       .then(({ data }) => {
-        setFetching(false);
-        setData(data.node);
+        setState((state) => ({ ...state, data: data.node, fetching: false }));
       })
       .catch((e) => {
-        setFetching(false);
-        setStatus(e.message);
+        setState({ ...state, status: e.message, fetching: false });
       });
   };
 
   return (
     <div className="MainWrapper">
-      {!data && !fetching && !status && (
+      {!state.data && !state.fetching && !status && (
         <>
           <RepoSearch onFetchRepo={fetchRepo} />
         </>
       )}
 
-      {(data || status || fetching) && (
+      {(state.data || status || state.fetching) && (
         <FetchStatus
           render={() => (
-            <ServiceProvider value={{ data, githubApi }}>
-              <IssuesCabinet />
+            <ServiceProvider value={{ data: state.data, githubApi }}>
+              <IssuesCabinet initialData={state.data} />
             </ServiceProvider>
           )}
-          fetching={fetching}
-          status={status}
-          onReset={() => setStatus("")}
+          fetching={state.fetching}
+          status={state.status}
+          onReset={() => setState((state) => ({ ...state, status: "" }))}
         />
       )}
     </div>

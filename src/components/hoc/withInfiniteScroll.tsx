@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC, useRef, RefObject } from "react";
+import React, { useEffect, useState, FC, useRef } from "react";
 import useDidUpdateEffect from "../customHooks/didUpdateEffect";
 
 import { IssuesListComponent } from "../../containers/IssueListContainer";
@@ -6,21 +6,21 @@ import { IssueDetailsComponent } from "../../containers/IssueDetailsContainer";
 
 interface InfiniteScrollProps {
   fetchedItems: Array<any>;
-  lastItemId: string;
+  lastItemId?: string;
   entityId: string;
   fetchFunction: Function;
-  wrapper: RefObject<HTMLDivElement>;
-  list: RefObject<HTMLDivElement>;
 }
 
 const withInfiniteScroll =
   (Wrapped: FC<IssuesListComponent | IssueDetailsComponent>) =>
   (props: InfiniteScrollProps) => {
-    const { fetchedItems, fetchFunction, entityId, lastItemId, wrapper, list } =
-      props;
+    const { fetchedItems, fetchFunction, entityId, lastItemId } = props;
+
+    const wrapper = useRef<HTMLDivElement>(null);
+    const list = useRef<HTMLDivElement>(null);
 
     const [scroll, setScroll] = useState(0);
-    console.log(scroll);
+
     const [fetching, setFetching] = useState(false);
 
     const handler = (e: any) => setScroll(e.target!.scrollTop);
@@ -51,7 +51,12 @@ const withInfiniteScroll =
     }, [fetchedItems.length]);
 
     return (
-      <Wrapped {...props} fetching={fetching} wrapper={wrapper} list={list} />
+      <Wrapped
+        {...props}
+        scrollFetching={fetching}
+        wrapper={wrapper}
+        list={list}
+      />
     );
   };
 

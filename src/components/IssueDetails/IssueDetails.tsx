@@ -10,18 +10,19 @@ import "./IssueDetails.scss";
 
 const IssueDetails = ({
   issueText,
-  fetching,
+  scrollFetching,
   comments,
   fetchedItems: moreComments,
   wrapper,
   list,
+  listFetching,
 }: IssueDetailsComponent) => {
   return (
     <div className="IssueDetailsWrapper">
       <FetchStatus
         onReset={() => {}}
         status=""
-        fetching={fetching}
+        fetching={listFetching!}
         render={() => (
           <>
             <div className="IssueTextWrapper fancyScrollBar">
@@ -33,6 +34,7 @@ const IssueDetails = ({
                 moreComments={moreComments}
                 wrapper={wrapper}
                 list={list}
+                fetching={scrollFetching!}
               />
             }
           </>

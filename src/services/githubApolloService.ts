@@ -106,6 +106,7 @@ class GithubApolloService {
         query getComments($id: ID!, $cursor: String, $qnty: Int!) {
           node(id: $id) {
             ... on Issue {
+              id
               body
               title
               comments(

@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
-  useRef,
+  RefObject,
 } from "react";
 import { IssuesData } from "../components/IssuesCabinet/types";
 import GithubApolloService from "../services/githubApolloService";
@@ -30,49 +30,55 @@ interface IssueDetailsContainerProps {
 interface IssueDetailsComponent extends InfiniteScrollProps {
   issueText?: string;
   comments?: IssueComments[];
-  fetching: boolean;
+  scrollFetching?: boolean;
+  wrapper?: RefObject<HTMLDivElement>;
+  list?: RefObject<HTMLDivElement>;
+  listFetching?: boolean;
 }
 
 const IssueDetailsContainer = (Wrapped: FC<IssueDetailsComponent>) =>
   withData((props: IssueDetailsContainerProps) => {
     const {
       currentIssueId,
-      service: {
-        data: {
-          id,
-          issues: { edges: comments },
-        },
-        githubApi,
-      },
+      service: { githubApi },
     } = props;
 
-    const wrapper = useRef(null);
-    const list = useRef(null);
-
-    const [data, setData] = useState<IssueDetailsData | null>(null);
+    const [issueText, setText] = useState("");
+    const [comments, setComments] = useState<IssueComments[]>([]);
     const [moreComments, setMoreComments] = useState<IssueComments[]>([]);
-    const [fetching, setFetching] = useState(false);
+    const [listFetching, setFetching] = useState(false);
 
-    const cursor = useMemo(
-      () =>
-        moreComments.length > 0
-          ? moreComments[moreComments.length - 1].cursor
-          : comments[comments.length - 1].cursor,
-      [moreComments.length]
-    );
+    const loadData = () => {
+      setFetching(true);
+      githubApi
+        .getComments(currentIssueId)
+        .then(({ data }: { data: IssueDetailsData }) => {
+          setText(data.node.body);
+          setComments(data.node.comments.edges);
+          setFetching(false);
+        });
+    };
+
+    useEffect(() => {
+      loadData();
+    }, []);
+
+    useDidUpdateEffect(() => {
+      loadData();
+    }, [currentIssueId]);
 
     const debounced = useCallback(
       debounceScroll(
         githubApi.getComments,
         (response: Promise<ApolloQueryResult<any>>) => {
           response
-            .then(({ data }: { data: any }) => {
+            .then(({ data }: { data: IssueDetailsData }) => {
               console.log(data);
-              /*
-                setMoreComments((moreComments) => [
-                  ...moreComments,
-                  ...evenMoreComments.comments.edges,
-                ]);*/
+
+              setMoreComments((moreComments) => [
+                ...moreComments,
+                ...data.node.comments.edges,
+              ]);
             })
             .catch((e) => {
               console.log(e);
@@ -82,32 +88,22 @@ const IssueDetailsContainer = (Wrapped: FC<IssueDetailsComponent>) =>
       [githubApi.getComments]
     );
 
-    useEffect(() => {
-      setFetching(true);
-      githubApi.getComments(comments[0].node.id).then(({ data }) => {
-        setData(data);
-        setFetching(false);
-      });
-    }, []);
+    const cursor = useMemo(() => {
+      if (comments.length === 0) return "";
 
-    useDidUpdateEffect(() => {
-      setFetching(true);
-      githubApi.getComments(currentIssueId).then(({ data }) => {
-        setData(data);
-        setFetching(false);
-      });
-    }, [currentIssueId]);
+      return moreComments.length > 0
+        ? moreComments[moreComments.length - 1].cursor
+        : comments[comments.length - 1].cursor;
+    }, [moreComments.length, comments]);
 
     const propsToWrapped: IssueDetailsComponent = {
-      issueText: data?.node.body,
-      comments: data?.node.comments.edges,
-      fetching,
+      issueText,
+      comments,
       fetchedItems: moreComments,
       fetchFunction: debounced,
       lastItemId: cursor,
       entityId: currentIssueId,
-      wrapper,
-      list,
+      listFetching,
     };
 
     return <Wrapped {...propsToWrapped} />;

@@ -8,14 +8,14 @@ import { IssuesListComponent } from "../../containers/IssueListContainer";
 import "./IssuesList.scss";
 
 const IssuesList = ({
-  fetching,
+  scrollFetching,
   issues,
   fetchedItems: moreIssues,
   wrapper,
   list,
   onIssueClick,
 }: IssuesListComponent) => {
-  const spinner = fetching && (
+  const spinner = scrollFetching && (
     <div className="lw">
       <Spinner width="40" height="40" color="#5E9CE2" />
     </div>
