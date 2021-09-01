@@ -19,26 +19,17 @@ const IssueDetails = ({
 }: IssueDetailsComponent) => {
   return (
     <div className="IssueDetailsWrapper">
-      <FetchStatus
-        onReset={() => {}}
-        status=""
-        fetching={listFetching!}
-        render={() => (
-          <>
-            <div className="IssueTextWrapper fancyScrollBar">
-              <p className="IssueText">{issueText}</p>
-            </div>
-            {
-              <IssueComments
-                comments={comments}
-                moreComments={moreComments}
-                wrapper={wrapper}
-                list={list}
-                fetching={scrollFetching!}
-              />
-            }
-          </>
-        )}
+      <div className="IssueTextWrapper fancyScrollBar">
+        <p className="IssueText">{issueText}</p>
+      </div>
+
+      <IssueComments
+        comments={comments}
+        moreComments={moreComments}
+        wrapper={wrapper}
+        list={list}
+        scrollFetching={scrollFetching}
+        listFetching={listFetching}
       />
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { RefObject } from "react";
 import { IssueComments as IssueCommentsType } from "../IssueDetails/types";
 import Spinner from "../elements/spinner";
+import FetchStatus from "../elements/fetchStatus";
 import "./IssueComments.scss";
 
 const IssueComments = ({
@@ -8,15 +9,17 @@ const IssueComments = ({
   moreComments,
   wrapper,
   list,
-  fetching,
+  scrollFetching,
+  listFetching,
 }: {
   comments?: IssueCommentsType[];
   moreComments?: IssueCommentsType[];
   wrapper?: RefObject<HTMLDivElement>;
   list?: RefObject<HTMLDivElement>;
-  fetching: boolean;
+  scrollFetching?: boolean;
+  listFetching?: boolean;
 }) => {
-  const spinner = fetching && (
+  const spinner = scrollFetching && (
     <div className="lw">
       <Spinner width="40" height="40" color="#5E9CE2" />
     </div>
@@ -25,18 +28,27 @@ const IssueComments = ({
   return (
     <div className="IssueCommentsWrapper fancyScrollBar" ref={wrapper}>
       <div className="IssueCommentsList" ref={list}>
-        {comments &&
-          comments.map((comment) => (
-            <div className="IssueComment" key={comment.node.id}>
-              {comment.node.body}
-            </div>
-          ))}
-        {moreComments &&
-          moreComments.map((comment) => (
-            <div className="IssueComment" key={comment.node.id}>
-              {comment.node.body}
-            </div>
-          ))}
+        <FetchStatus
+          onReset={() => {}}
+          status=""
+          fetching={listFetching!}
+          render={() => (
+            <>
+              {comments &&
+                comments.map((comment) => (
+                  <div className="IssueComment" key={comment.node.id}>
+                    {comment.node.body}
+                  </div>
+                ))}
+              {moreComments &&
+                moreComments.map((comment) => (
+                  <div className="IssueComment" key={comment.node.id}>
+                    {comment.node.body}
+                  </div>
+                ))}
+            </>
+          )}
+        />
 
         {spinner}
       </div>

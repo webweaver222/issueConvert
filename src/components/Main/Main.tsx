@@ -8,13 +8,7 @@ import { ServiceProvider } from "../elements/service-provider";
 import GitgubApolloService from "../../services/githubApolloService";
 import "./Main.scss";
 
-import json from "../../../try.json";
-
 const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
-  /*const [data, setData] = useState(null);
-  const [fetching, setFetching] = useState(false);
-  const [status, setStatus] = useState("");*/
-
   const [state, setState] = useState<{
     data: any;
     fetching: boolean;
