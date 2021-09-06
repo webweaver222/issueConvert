@@ -16,13 +16,13 @@ const IssuesList = ({
   onIssueClick,
 }: IssuesListComponent) => {
   const spinner = scrollFetching && (
-    <div className="lw">
+    <div className="loaderIcon">
       <Spinner width="40" height="40" color="#5E9CE2" />
     </div>
   );
 
   return (
-    <div className="issueListContainer">
+    <div className="IssuesListContainer infiniteScroll">
       <div className="IssuesListWrapper fancyScrollBar" ref={wrapper}>
         <div className="issueList" ref={list}>
           {issues!.map((issue) => (

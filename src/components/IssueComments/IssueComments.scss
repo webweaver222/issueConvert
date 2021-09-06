@@ -1,20 +1,17 @@
-.IssueCommentsWrapper {
+.IssueCommentsContainer {
   flex: 1;
-  overflow-y: auto;
-  .lw {
-    position: absolute;
-    bottom: 0;
+
+  .IssueCommentsWrapper {
     width: 100%;
-    height: 50px;
-    //background-color: rgba(255, 255, 255, 0.8);
-    display: flex;
-  }
-  .IssueCommentsList {
-    padding: 4px;
-    .IssueComment {
-      margin: 10px 0;
-      border: 1px solid black;
-      height: 100px; //adjust  for big screens
+    overflow-y: auto;
+
+    .IssueCommentsList {
+      padding: 4px;
+      .IssueComment {
+        margin: 10px 0;
+        border: 1px solid black;
+        height: 100px; //adjust  for big screens
+      }
     }
   }
 }
