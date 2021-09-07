@@ -3,8 +3,9 @@ import IssueDetailsContainer, {
   IssueDetailsComponent,
 } from "../../containers/IssueDetailsContainer";
 import IssueComments from "../IssueComments";
-import FetchStatus from "../elements/fetchStatus";
+import withInitialComments from "../hoc/withInitialComments";
 import withInfiniteScroll from "../hoc/withInfiniteScroll";
+import withAddCommentModal from "../hoc/withAddCommentModal";
 import { compose } from "../../utils";
 import "./IssueDetails.scss";
 
@@ -16,6 +17,7 @@ const IssueDetails = ({
   wrapper,
   list,
   listFetching,
+  onOpenModal,
 }: IssueDetailsComponent) => {
   return (
     <div className="IssueDetailsWrapper">
@@ -31,8 +33,17 @@ const IssueDetails = ({
         scrollFetching={scrollFetching}
         listFetching={listFetching}
       />
+
+      <div className="controls">
+        <button onClick={onOpenModal}>Add Comment</button>
+      </div>
     </div>
   );
 };
 
-export default compose(IssueDetailsContainer, withInfiniteScroll)(IssueDetails);
+export default compose(
+  withInitialComments,
+  IssueDetailsContainer,
+  withInfiniteScroll,
+  withAddCommentModal
+)(IssueDetails);

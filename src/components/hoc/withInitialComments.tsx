@@ -3,22 +3,30 @@ import React, { useState, useEffect, FC } from "react";
 import { IssueComments } from "../IssueDetails/types";
 import { withData } from "./withData";
 import useDidUpdateEffect from "../customHooks/didUpdateEffect";
-import didUpdateEffect from "../customHooks/didUpdateEffect";
-import { ApolloQueryResult } from "../../services/githubApolloService";
-import { RepoSearchComponent } from "../../containers/RepoSearchContainer";
-import { debounceSearch } from "../../utils";
+import GithubApolloService from "../../services/githubApolloService";
 
-const withInitialComments = (Wrapped: FC<any>) =>
-  withData((props: any) => {
+interface withInitialCommentsProps {
+  currentIssueId: string;
+  service: { githubApi: GithubApolloService };
+}
+
+interface initialCommentsState {
+  issueText: string;
+  comments: IssueComments[];
+  listFetching: boolean;
+}
+
+interface withInitialCommentsHoc extends withInitialCommentsProps {}
+
+interface withInitialCommentsHoc extends initialCommentsState {}
+
+const withInitialComments = (Wrapped: FC<withInitialCommentsHoc>) =>
+  withData((props: withInitialCommentsProps) => {
     const {
       currentIssueId,
       service: { githubApi },
     } = props;
-    const [state, setState] = useState<{
-      issueText: string;
-      comments: IssueComments[];
-      listFetching: boolean;
-    }>({
+    const [state, setState] = useState<initialCommentsState>({
       issueText: "",
       comments: [],
       listFetching: false,
@@ -54,3 +62,8 @@ const withInitialComments = (Wrapped: FC<any>) =>
   });
 
 export default withInitialComments;
+export type {
+  withInitialCommentsProps,
+  withInitialCommentsHoc,
+  initialCommentsState,
+};

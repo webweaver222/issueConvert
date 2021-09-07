@@ -31,6 +31,7 @@ const withInfiniteScroll =
     }, []);
 
     useDidUpdateEffect(() => {
+      console.log(scroll);
       if (
         scroll + wrapper.current!.offsetHeight + 0 >
         list.current!.offsetHeight

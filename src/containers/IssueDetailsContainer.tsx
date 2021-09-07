@@ -1,71 +1,37 @@
-import React, {
-  FC,
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-  RefObject,
-} from "react";
-import { IssuesData } from "../components/IssuesCabinet/types";
-import GithubApolloService from "../services/githubApolloService";
-import { withData } from "../components/hoc/withData";
-import useDidUpdateEffect from "../components/customHooks/didUpdateEffect";
+import React, { FC, useState, useMemo, useCallback, RefObject } from "react";
 import { InfiniteScrollProps } from "../components/hoc/withInfiniteScroll";
 import { ApolloQueryResult } from "@apollo/client";
 import {
   IssueDetailsData,
   IssueComments,
 } from "../components/IssueDetails/types";
+import {
+  withInitialCommentsHoc,
+  initialCommentsState,
+} from "../components/hoc/withInitialComments";
 
 import { debounceScroll } from "../utils";
 
-interface IssueDetailsContainerProps {
-  currentIssueId: string;
-  service: {
-    data: IssuesData;
-    githubApi: GithubApolloService;
-  };
-}
-
 interface IssueDetailsComponent extends InfiniteScrollProps {
-  issueText?: string;
-  comments?: IssueComments[];
   scrollFetching?: boolean;
   wrapper?: RefObject<HTMLDivElement>;
   list?: RefObject<HTMLDivElement>;
-  listFetching?: boolean;
+  onOpenModal?: () => {};
 }
 
-const IssueDetailsContainer = (Wrapped: FC<IssueDetailsComponent>) =>
-  withData((props: IssueDetailsContainerProps) => {
+interface IssueDetailsComponent extends initialCommentsState {}
+
+const IssueDetailsContainer =
+  (Wrapped: FC<IssueDetailsComponent>) => (props: withInitialCommentsHoc) => {
     const {
       currentIssueId,
       service: { githubApi },
+      comments,
+      issueText,
+      listFetching,
     } = props;
 
-    const [issueText, setText] = useState("");
-    const [comments, setComments] = useState<IssueComments[]>([]);
     const [moreComments, setMoreComments] = useState<IssueComments[]>([]);
-    const [listFetching, setFetching] = useState(false);
-
-    const loadData = () => {
-      setFetching(true);
-      githubApi
-        .getComments(currentIssueId)
-        .then(({ data }: { data: IssueDetailsData }) => {
-          setText(data.node.body);
-          setComments(data.node.comments.edges);
-          setFetching(false);
-        });
-    };
-
-    useEffect(() => {
-      loadData();
-    }, []);
-
-    useDidUpdateEffect(() => {
-      loadData();
-    }, [currentIssueId]);
 
     const debounced = useCallback(
       debounceScroll(
@@ -107,7 +73,7 @@ const IssueDetailsContainer = (Wrapped: FC<IssueDetailsComponent>) =>
     };
 
     return <Wrapped {...propsToWrapped} />;
-  });
+  };
 
 export default IssueDetailsContainer;
 export type { IssueDetailsComponent };
