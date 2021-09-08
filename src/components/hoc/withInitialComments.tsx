@@ -31,7 +31,7 @@ const withInitialComments = (Wrapped: FC<withInitialCommentsHoc>) =>
       comments: [],
       listFetching: false,
     });
-
+    console.log(currentIssueId);
     const loadData = () => {
       setState({ ...state, listFetching: true });
       githubApi.getComments(currentIssueId).then(({ data }: { data: any }) => {

@@ -139,7 +139,26 @@ class GithubApolloService {
     });
   };
 
-  addComment = (issueId: string) => {};
+  addComment = (issueId: string) => {
+    return this.client.mutate({
+      mutation: gql`
+        mutation addComment {
+          __typename
+          addComment(
+            input: { subjectId: "MDU6SXNzdWU5ODQ5MTI5MzY=", body: "test" }
+          ) {
+            commentEdge {
+              node {
+                author {
+                  login
+                }
+              }
+            }
+          }
+        }
+      `,
+    });
+  };
 }
 
 export default GithubApolloService;

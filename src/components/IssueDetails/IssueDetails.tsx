@@ -5,7 +5,8 @@ import IssueDetailsContainer, {
 import IssueComments from "../IssueComments";
 import withInitialComments from "../hoc/withInitialComments";
 import withInfiniteScroll from "../hoc/withInfiniteScroll";
-import withAddCommentModal from "../hoc/withAddCommentModal";
+import CommentForm from "../CommentForm";
+import withModal, { AddComment } from "../hoc/withModal";
 import { compose } from "../../utils";
 import "./IssueDetails.scss";
 
@@ -34,9 +35,9 @@ const IssueDetails = ({
         listFetching={listFetching}
       />
 
-      <div className="controls">
+      {/*<div className="controls">
         <button onClick={onOpenModal}>Add Comment</button>
-      </div>
+  </div>*/}
     </div>
   );
 };
@@ -45,5 +46,5 @@ export default compose(
   withInitialComments,
   IssueDetailsContainer,
   withInfiniteScroll,
-  withAddCommentModal
+  withModal(CommentForm)
 )(IssueDetails);
