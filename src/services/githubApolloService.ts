@@ -16,14 +16,16 @@ class GithubApolloService {
   url: string = "https://api.github.com/graphql";
   token: string = config.github_token;
 
-  constructor() {
+  constructor(oauth_token?: string) {
     const httpLink = new HttpLink({ uri: this.url });
 
     const authLink = setContext((_, { headers }) => {
       return {
         headers: {
           ...headers,
-          Authorization: this.token ? `bearer ${this.token}` : "",
+          Authorization: this.token
+            ? `bearer ${oauth_token ? oauth_token : this.token}`
+            : "",
         },
       };
     });
@@ -33,6 +35,18 @@ class GithubApolloService {
       link: authLink.concat(httpLink),
     });
   }
+
+  getUser = () => {
+    return this.client.query({
+      query: gql`
+        query testQuery {
+          viewer {
+            login
+          }
+        }
+      `,
+    });
+  };
 
   getRepos = (input: string) => {
     return this.client.query({
