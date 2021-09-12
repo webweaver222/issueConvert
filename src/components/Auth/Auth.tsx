@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import useDidUpdateEffect from "../customHooks/didUpdateEffect";
 import GithubApolloService from "../../services/githubApolloService";
 
+import config from "../../../config";
+
 import "./Auth.scss";
 
 const Auth = ({ Authnticate }: { Authnticate: Function }) => {
-  const cid = "d33058c99559a964904b";
-  const client_secret = "7f95e97b22f5c83c12ab05aa13f97106fb6ac4fe";
-  const codeLink = "https://github.com/login/oauth/authorize?client_id=";
+  const { client_id, client_secret } = config;
+
+  const codeLink =
+    "https://github.com/login/oauth/authorize?client_id=" +
+    client_id +
+    "&login=" +
+    "&scope=public_repo";
   const tokenLink = "https://github.com/login/oauth/access_token";
 
   const [state, setState] = useState<{
@@ -22,7 +28,7 @@ const Auth = ({ Authnticate }: { Authnticate: Function }) => {
 
   useDidUpdateEffect(() => {
     const data = {
-      client_id: cid,
+      client_id,
       client_secret,
       code,
     };
@@ -52,11 +58,7 @@ const Auth = ({ Authnticate }: { Authnticate: Function }) => {
   useDidUpdateEffect(() => Authnticate(token), [token]);
 
   const onAuth = async () => {
-    const popup = window.open(
-      codeLink + cid + "&login=" + "&scope=public_repo",
-      "GitHub OAuth",
-      "width=500,height=500"
-    );
+    const popup = window.open(codeLink, "GitHub OAuth", "width=500,height=500");
 
     const pollTimer = window.setInterval(async function () {
       try {

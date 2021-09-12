@@ -19,7 +19,7 @@ const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
     status: "",
   });
 
-  /* useEffect(() => {
+  /*useEffect(() => {
     setState((state) => ({ ...state, fetching: true }));
 
     githubApi

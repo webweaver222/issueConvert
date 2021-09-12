@@ -12,16 +12,16 @@ import Auth from "../Auth";
 //const clientApi = new GithubApolloService();
 
 const App = () => {
-  const [api, setApi] = useState<GithubApolloService>(
+  const [client, setClient] = useState<GithubApolloService>(
     new GithubApolloService()
   );
 
   const Authnticate = (token?: string) =>
-    setApi(new GithubApolloService(token));
+    setClient(new GithubApolloService(token));
 
   return (
     <div className="app">
-      <ServiceProvider value={api}>
+      <ServiceProvider value={client}>
         <Main />
       </ServiceProvider>
       <Auth Authnticate={Authnticate} />
