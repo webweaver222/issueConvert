@@ -2,8 +2,6 @@ import React, { FC, useState } from "react";
 import Modal from "../elements/modal";
 import { IssueDetailsComponent } from "../../containers/IssueDetailsContainer";
 
-const AddComment = () => <>Add Comment Modal</>;
-
 const withModal =
   (modalScernario: (props: any) => JSX.Element) =>
   (Wrapped: FC<IssueDetailsComponent>) =>
@@ -15,7 +13,9 @@ const withModal =
     return (
       <>
         {opened && (
-          <Modal onClose={() => setOpened(false)}>{modalScernario}</Modal>
+          <Modal propsToChildren={props} onClose={() => setOpened(false)}>
+            {modalScernario}
+          </Modal>
         )}
         <Wrapped {...props} onOpenModal={openModal} />
       </>
@@ -23,4 +23,3 @@ const withModal =
   };
 
 export default withModal;
-export { AddComment };

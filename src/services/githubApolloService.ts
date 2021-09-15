@@ -17,6 +17,7 @@ class GithubApolloService {
   token: string = config.github_token;
 
   constructor(oauth_token?: string) {
+    if (oauth_token) this.token = oauth_token;
     const httpLink = new HttpLink({ uri: this.url });
 
     const authLink = setContext((_, { headers }) => {
@@ -153,14 +154,12 @@ class GithubApolloService {
     });
   };
 
-  addComment = (issueId: string) => {
+  addComment = (issueId: string, input: string) => {
     return this.client.mutate({
       mutation: gql`
-        mutation addComment {
+        mutation addComment($issueId: ID!, $input: String) {
           __typename
-          addComment(
-            input: { subjectId: "MDU6SXNzdWU5ODQ5MTI5MzY=", body: "test" }
-          ) {
+          addComment(input: { subjectId: $issueId, body: $input }) {
             commentEdge {
               node {
                 author {
@@ -171,6 +170,10 @@ class GithubApolloService {
           }
         }
       `,
+      variables: {
+        issueId,
+        input,
+      },
     });
   };
 }

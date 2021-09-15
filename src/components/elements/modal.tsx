@@ -4,7 +4,9 @@ import ReactDom from "react-dom";
 const Modal = ({
   children,
   onClose,
+  propsToChildren,
 }: {
+  propsToChildren: {};
   children: any;
   onClose: () => void;
 }) => {
@@ -16,7 +18,7 @@ const Modal = ({
           <div className="overlay" />
           <div className="modal">
             <i className="fas fa-times" onClick={onClose}></i>
-            {children()}
+            {children(propsToChildren)}
           </div>
         </>,
         portalDiv

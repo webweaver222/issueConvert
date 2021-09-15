@@ -25,6 +25,18 @@ const IssueComments = ({
     </div>
   );
 
+  const renderItems = (items: IssueCommentsType[]) => {
+    return (
+      items &&
+      items.map((item) => (
+        <div className="IssueComment" key={item.node.id}>
+          {item.node.body}
+          <div className="commentAuthor">by {item.node.author.login}</div>
+        </div>
+      ))
+    );
+  };
+
   return (
     <div className="IssueCommentsContainer infiniteScroll">
       <div className="IssueCommentsWrapper fancyScrollBar" ref={wrapper}>
@@ -35,22 +47,11 @@ const IssueComments = ({
             fetching={listFetching!}
             render={() => (
               <>
-                {comments &&
-                  comments.map((comment) => (
-                    <div className="IssueComment" key={comment.node.id}>
-                      {comment.node.body}
-                    </div>
-                  ))}
-                {moreComments &&
-                  moreComments.map((comment) => (
-                    <div className="IssueComment" key={comment.node.id}>
-                      {comment.node.body}
-                    </div>
-                  ))}
+                {renderItems(comments!)}
+                {renderItems(moreComments!)}
               </>
             )}
           />
-
           {spinner}
         </div>
       </div>

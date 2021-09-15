@@ -3,11 +3,15 @@ import GithubApolloService from "../../services/githubApolloService";
 import { withData } from "../hoc/withData";
 import "./CommentForm.scss";
 
-const CommentForm = ({
-  service: { githubApi },
-}: {
-  service: { githubApi: GithubApolloService };
-}) => {
+const CommentForm = (props: any) => {
+  const {
+    entityId,
+    service: { githubApi },
+  }: {
+    entityId: string;
+    service: { githubApi: GithubApolloService };
+  } = props;
+
   const [input, setInput] = useState("");
 
   const onChangeInput = (e: any) => setInput(e.target.value);
@@ -15,8 +19,8 @@ const CommentForm = ({
   const onAddComment = () => {
     try {
       githubApi
-        .addComment("")
-        .then((res) => console.log(res))
+        .addComment(entityId, input)
+        .then((res) => {})
         .catch((e) => console.log(e));
     } catch (e) {
       console.log(e, "try/catch");
