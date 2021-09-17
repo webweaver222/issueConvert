@@ -18,7 +18,9 @@ interface initialCommentsState {
 
 interface withInitialCommentsHoc extends withInitialCommentsProps {}
 
-interface withInitialCommentsHoc extends initialCommentsState {}
+interface withInitialCommentsHoc extends initialCommentsState {
+  onPostComment: CallableFunction;
+}
 
 const withInitialComments = (Wrapped: FC<withInitialCommentsHoc>) =>
   withData((props: withInitialCommentsProps) => {
@@ -31,7 +33,7 @@ const withInitialComments = (Wrapped: FC<withInitialCommentsHoc>) =>
       comments: [],
       listFetching: false,
     });
-    console.log(currentIssueId);
+
     const loadData = () => {
       setState({ ...state, listFetching: true });
       githubApi.getComments(currentIssueId).then(({ data }: { data: any }) => {
@@ -51,9 +53,14 @@ const withInitialComments = (Wrapped: FC<withInitialCommentsHoc>) =>
       loadData();
     }, [currentIssueId]);
 
+    const onNewComment = (comment: IssueComments) => {
+      setState({ ...state, comments: [comment, ...state.comments] });
+    };
+
     return (
       <Wrapped
         {...props}
+        onPostComment={onNewComment}
         comments={state.comments}
         issueText={state.issueText}
         listFetching={state.listFetching}
@@ -62,8 +69,4 @@ const withInitialComments = (Wrapped: FC<withInitialCommentsHoc>) =>
   });
 
 export default withInitialComments;
-export type {
-  withInitialCommentsProps,
-  withInitialCommentsHoc,
-  initialCommentsState,
-};
+export type { withInitialCommentsHoc, initialCommentsState };

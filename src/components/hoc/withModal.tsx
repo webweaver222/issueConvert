@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react";
 import Modal from "../elements/modal";
+
 import { IssueDetailsComponent } from "../../containers/IssueDetailsContainer";
 
 const withModal =

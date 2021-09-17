@@ -155,6 +155,7 @@ class GithubApolloService {
   };
 
   addComment = (issueId: string, input: string) => {
+    console.log(issueId);
     return this.client.mutate({
       mutation: gql`
         mutation addComment($issueId: ID!, $input: String) {
@@ -164,8 +165,13 @@ class GithubApolloService {
               node {
                 author {
                   login
+                  avatarUrl
                 }
+                body
+                id
+                createdAt
               }
+              cursor
             }
           }
         }

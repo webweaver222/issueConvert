@@ -12,6 +12,11 @@ const Modal = ({
 }) => {
   const portalDiv = document.getElementById("portal");
 
+  propsToChildren = {
+    ...propsToChildren,
+    onClose,
+  };
+
   return portalDiv
     ? ReactDom.createPortal(
         <>

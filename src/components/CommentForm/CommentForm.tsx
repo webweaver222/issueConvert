@@ -1,27 +1,46 @@
 import React, { useState } from "react";
 import GithubApolloService from "../../services/githubApolloService";
 import { withData } from "../hoc/withData";
+import FetchStatus from "../elements/fetchStatus";
+import { IssueDetailsComponent } from "../../containers/IssueDetailsContainer";
 import "./CommentForm.scss";
 
-const CommentForm = (props: any) => {
+interface CommentFormComponent extends IssueDetailsComponent {
+  service: { githubApi: GithubApolloService };
+  onClose: () => void;
+}
+
+const CommentForm = (props: CommentFormComponent) => {
   const {
     entityId,
     service: { githubApi },
-  }: {
-    entityId: string;
-    service: { githubApi: GithubApolloService };
+    onPostComment,
+    onClose,
   } = props;
 
-  const [input, setInput] = useState("");
+  const [state, setState] = useState({
+    input: "",
+    fetching: false,
+    error: "",
+  });
 
-  const onChangeInput = (e: any) => setInput(e.target.value);
+  const { input, error, fetching } = state;
+
+  const onChangeInput = (e: any) =>
+    setState({ ...state, input: e.target.value });
 
   const onAddComment = () => {
+    setState({ ...state, fetching: true });
     try {
       githubApi
         .addComment(entityId, input)
-        .then((res) => {})
-        .catch((e) => console.log(e));
+        .then((res) => {
+          onPostComment(res.data.addComment.commentEdge);
+          onClose();
+        })
+        .catch((e: Error) =>
+          setState({ ...state, error: e.message, fetching: false })
+        );
     } catch (e) {
       console.log(e, "try/catch");
     }
@@ -29,15 +48,24 @@ const CommentForm = (props: any) => {
 
   return (
     <div className="CommentFormWrapper">
-      <textarea
-        name="area1"
-        id="comment"
-        cols={50}
-        rows={12}
-        value={input}
-        onChange={onChangeInput}
-      ></textarea>
-      <button onClick={onAddComment}>Add Comment</button>
+      <FetchStatus
+        onReset={null}
+        status={error}
+        fetching={fetching}
+        render={() => (
+          <>
+            <textarea
+              name="area1"
+              id="comment"
+              cols={50}
+              rows={12}
+              value={input}
+              onChange={onChangeInput}
+            ></textarea>
+            <button onClick={onAddComment}>Add Comment</button>
+          </>
+        )}
+      />
     </div>
   );
 };

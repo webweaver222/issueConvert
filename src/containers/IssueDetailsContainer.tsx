@@ -16,10 +16,11 @@ interface IssueDetailsComponent extends InfiniteScrollProps {
   scrollFetching?: boolean;
   wrapper?: RefObject<HTMLDivElement>;
   list?: RefObject<HTMLDivElement>;
-  onOpenModal?: () => {};
 }
 
-interface IssueDetailsComponent extends initialCommentsState {}
+interface IssueDetailsComponent extends initialCommentsState {
+  onPostComment: CallableFunction;
+}
 
 const IssueDetailsContainer =
   (Wrapped: FC<IssueDetailsComponent>) => (props: withInitialCommentsHoc) => {
@@ -29,6 +30,7 @@ const IssueDetailsContainer =
       comments,
       issueText,
       listFetching,
+      onPostComment,
     } = props;
 
     const [moreComments, setMoreComments] = useState<IssueComments[]>([]);
@@ -70,6 +72,7 @@ const IssueDetailsContainer =
       lastItemId: cursor,
       entityId: currentIssueId,
       listFetching,
+      onPostComment,
     };
 
     return <Wrapped {...propsToWrapped} />;
