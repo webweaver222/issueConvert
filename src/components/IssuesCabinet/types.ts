@@ -2,6 +2,7 @@ interface IssuesData {
   id: string;
   nameWithOwner: string;
   issues: {
+    totalCount: number;
     edges: IssuesItem[];
   };
 }

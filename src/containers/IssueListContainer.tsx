@@ -35,6 +35,7 @@ const IssueListContainer = (Wrapped: FC<IssuesListComponent>) =>
       const {
         id,
         nameWithOwner,
+
         issues: { edges: issues },
       } = data;
 
@@ -73,6 +74,11 @@ const IssueListContainer = (Wrapped: FC<IssuesListComponent>) =>
         [githubApi.getIssues]
       );
 
+      const allLoaded =
+        issues.length + moreIssues.length < data.issues.totalCount
+          ? false
+          : true;
+
       const propsToWrapped: IssuesListComponent = {
         nameWithOwner,
         issues,
@@ -81,6 +87,7 @@ const IssueListContainer = (Wrapped: FC<IssuesListComponent>) =>
         entityId: id,
         fetchFunction: debounced,
         onIssueClick: onIssueClick,
+        allLoaded,
       };
 
       return <Wrapped {...propsToWrapped} />;

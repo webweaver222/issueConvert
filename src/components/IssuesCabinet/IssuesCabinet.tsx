@@ -15,7 +15,7 @@ const IssuesCabinet = ({
   return (
     <div className="IssueCabinetWrapper">
       <IssuesList onIssueClick={(id: string) => setCurrentIssue(id)} />
-      <IssueDetails currentIssueId={currentIssueId} />
+      <IssueDetails issueId={currentIssueId} />
     </div>
   );
 };

@@ -11,7 +11,6 @@ import { compose } from "../../utils";
 import "./IssueDetails.scss";
 
 const IssueDetails = ({
-  entityId,
   issueText,
   scrollFetching,
   comments,

@@ -12,18 +12,16 @@ const Modal = ({
 }) => {
   const portalDiv = document.getElementById("portal");
 
-  propsToChildren = {
-    ...propsToChildren,
-    onClose,
-  };
-
   return portalDiv
     ? ReactDom.createPortal(
         <>
           <div className="overlay" />
           <div className="modal">
             <i className="fas fa-times" onClick={onClose}></i>
-            {children(propsToChildren)}
+            {children({
+              ...propsToChildren,
+              onClose,
+            })}
           </div>
         </>,
         portalDiv

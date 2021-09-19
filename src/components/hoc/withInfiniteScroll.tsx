@@ -9,12 +9,14 @@ interface InfiniteScrollProps {
   lastItemId?: string;
   entityId: string;
   fetchFunction: Function;
+  allLoaded: boolean;
 }
 
 const withInfiniteScroll =
   (Wrapped: FC<IssuesListComponent | IssueDetailsComponent>) =>
-  (props: InfiniteScrollProps) => {
-    const { fetchedItems, fetchFunction, entityId, lastItemId } = props;
+  (props: InfiniteScrollProps & IssueDetailsComponent) => {
+    const { fetchedItems, fetchFunction, entityId, lastItemId, allLoaded } =
+      props;
     const wrapper = useRef<HTMLDivElement>(null);
     const list = useRef<HTMLDivElement>(null);
     const [scroll, setScroll] = useState(0);
@@ -31,16 +33,15 @@ const withInfiniteScroll =
     }, []);
 
     useDidUpdateEffect(() => {
-      console.log(scroll);
       if (
         scroll + wrapper.current!.offsetHeight + 0 >
         list.current!.offsetHeight
       ) {
-        if (!fetching) {
+        if (!fetching && !allLoaded) {
           fetchFunction(entityId, lastItemId);
         }
 
-        return setFetching(true);
+        if (!allLoaded) return setFetching(true);
       }
 
       return setFetching(false);

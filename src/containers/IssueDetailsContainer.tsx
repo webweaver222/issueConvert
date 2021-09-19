@@ -1,36 +1,43 @@
-import React, { FC, useState, useMemo, useCallback, RefObject } from "react";
+import React, {
+  FC,
+  useState,
+  useMemo,
+  useCallback,
+  RefObject,
+  MouseEventHandler,
+} from "react";
 import { InfiniteScrollProps } from "../components/hoc/withInfiniteScroll";
 import { ApolloQueryResult } from "@apollo/client";
 import {
   IssueDetailsData,
   IssueComments,
 } from "../components/IssueDetails/types";
-import {
-  withInitialCommentsHoc,
-  initialCommentsState,
-} from "../components/hoc/withInitialComments";
+import { IssueDetailsComponent as IssueDetailsProps } from "../components/hoc/withInitialComments";
 
 import { debounceScroll } from "../utils";
 
-interface IssueDetailsComponent extends InfiniteScrollProps {
+interface IssueDetailsContainer extends InfiniteScrollProps, IssueDetailsProps {
   scrollFetching?: boolean;
   wrapper?: RefObject<HTMLDivElement>;
   list?: RefObject<HTMLDivElement>;
+  onOpenModal?: MouseEventHandler<HTMLButtonElement>;
 }
 
-interface IssueDetailsComponent extends initialCommentsState {
-  onPostComment: CallableFunction;
-}
+type IssueDetailsComponent = Omit<
+  IssueDetailsContainer,
+  "service" | "issueId" | "totalCount"
+>;
 
 const IssueDetailsContainer =
-  (Wrapped: FC<IssueDetailsComponent>) => (props: withInitialCommentsHoc) => {
+  (Wrapped: FC<IssueDetailsComponent>) => (props: IssueDetailsProps) => {
     const {
-      currentIssueId,
+      issueId,
       service: { githubApi },
       comments,
       issueText,
       listFetching,
       onPostComment,
+      totalCount,
     } = props;
 
     const [moreComments, setMoreComments] = useState<IssueComments[]>([]);
@@ -41,8 +48,6 @@ const IssueDetailsContainer =
         (response: Promise<ApolloQueryResult<any>>) => {
           response
             .then(({ data }: { data: IssueDetailsData }) => {
-              console.log(data);
-
               setMoreComments((moreComments) => [
                 ...moreComments,
                 ...data.node.comments.edges,
@@ -64,15 +69,19 @@ const IssueDetailsContainer =
         : comments[comments.length - 1].cursor;
     }, [moreComments.length, comments]);
 
+    const allLoaded =
+      comments.length + moreComments.length < totalCount ? false : true;
+
     const propsToWrapped: IssueDetailsComponent = {
       issueText,
       comments,
       fetchedItems: moreComments,
       fetchFunction: debounced,
       lastItemId: cursor,
-      entityId: currentIssueId,
+      entityId: issueId,
       listFetching,
       onPostComment,
+      allLoaded,
     };
 
     return <Wrapped {...propsToWrapped} />;

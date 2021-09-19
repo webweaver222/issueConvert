@@ -87,6 +87,7 @@ class GithubApolloService {
                 orderBy: { field: CREATED_AT, direction: DESC }
                 after: $cursor
               ) {
+                totalCount
                 edges {
                   node {
                     title
@@ -112,9 +113,6 @@ class GithubApolloService {
     });
   };
 
-  /**  
-  } */
-
   getComments = (issueId: string, cursor?: string) => {
     return this.client.query({
       query: gql`
@@ -129,6 +127,7 @@ class GithubApolloService {
                 after: $cursor
                 orderBy: { field: UPDATED_AT, direction: DESC }
               ) {
+                totalCount
                 edges {
                   cursor
                   node {
@@ -149,13 +148,12 @@ class GithubApolloService {
       variables: {
         id: issueId,
         cursor,
-        qnty: cursor ? 2 : 5,
+        qnty: cursor ? 5 : 5,
       },
     });
   };
 
   addComment = (issueId: string, input: string) => {
-    console.log(issueId);
     return this.client.mutate({
       mutation: gql`
         mutation addComment($issueId: ID!, $input: String) {

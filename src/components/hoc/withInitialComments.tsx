@@ -6,7 +6,7 @@ import useDidUpdateEffect from "../customHooks/didUpdateEffect";
 import GithubApolloService from "../../services/githubApolloService";
 
 interface withInitialCommentsProps {
-  currentIssueId: string;
+  issueId: string;
   service: { githubApi: GithubApolloService };
 }
 
@@ -14,33 +14,36 @@ interface initialCommentsState {
   issueText: string;
   comments: IssueComments[];
   listFetching: boolean;
+  totalCount: number;
 }
 
-interface withInitialCommentsHoc extends withInitialCommentsProps {}
-
-interface withInitialCommentsHoc extends initialCommentsState {
+interface IssueDetailsComponent
+  extends initialCommentsState,
+    withInitialCommentsProps {
   onPostComment: CallableFunction;
 }
 
-const withInitialComments = (Wrapped: FC<withInitialCommentsHoc>) =>
+const withInitialComments = (Wrapped: FC<IssueDetailsComponent>) =>
   withData((props: withInitialCommentsProps) => {
     const {
-      currentIssueId,
+      issueId,
       service: { githubApi },
     } = props;
     const [state, setState] = useState<initialCommentsState>({
       issueText: "",
       comments: [],
       listFetching: false,
+      totalCount: 1000,
     });
 
     const loadData = () => {
       setState({ ...state, listFetching: true });
-      githubApi.getComments(currentIssueId).then(({ data }: { data: any }) => {
+      githubApi.getComments(issueId).then(({ data }: { data: any }) => {
         setState({
           issueText: data.node.body,
           comments: data.node.comments.edges,
           listFetching: false,
+          totalCount: data.node.comments.totalCount,
         });
       });
     };
@@ -51,7 +54,7 @@ const withInitialComments = (Wrapped: FC<withInitialCommentsHoc>) =>
 
     useDidUpdateEffect(() => {
       loadData();
-    }, [currentIssueId]);
+    }, [issueId]);
 
     const onNewComment = (comment: IssueComments) => {
       setState({ ...state, comments: [comment, ...state.comments] });
@@ -64,9 +67,10 @@ const withInitialComments = (Wrapped: FC<withInitialCommentsHoc>) =>
         comments={state.comments}
         issueText={state.issueText}
         listFetching={state.listFetching}
+        totalCount={state.totalCount}
       />
     );
   });
 
 export default withInitialComments;
-export type { withInitialCommentsHoc, initialCommentsState };
+export type { IssueDetailsComponent, initialCommentsState };
