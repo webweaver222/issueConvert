@@ -10,9 +10,11 @@ import "./Auth.scss";
 const Auth = ({
   Authnticate,
   testifyApi,
+  aref,
 }: {
   Authnticate: Function;
   testifyApi: TestifyApi;
+  aref: any;
 }) => {
   const codeLink =
     "https://github.com/login/oauth/authorize?client_id=" +
@@ -77,7 +79,9 @@ const Auth = ({
 
   return (
     <div className="AuthWrapper">
-      <button onClick={onAuth}>Auth</button>
+      <button ref={aref} onClick={onAuth}>
+        Auth
+      </button>
     </div>
   );
 };

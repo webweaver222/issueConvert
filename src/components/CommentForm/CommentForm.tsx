@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, MouseEventHandler } from "react";
 import GithubApolloService from "../../services/githubApolloService";
 import FetchStatus from "../elements/fetchStatus";
 import { IssueDetailsComponent } from "../../containers/IssueDetailsContainer";
 import withAuthRequired from "../hoc/withAuthRequired";
 
 interface CommentFormComponent extends IssueDetailsComponent {
-  service: { githubApi: GithubApolloService };
+  service: { githubApi: GithubApolloService; onAuth: MouseEventHandler };
   onClose: () => void;
 }
 

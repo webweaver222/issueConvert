@@ -8,7 +8,13 @@ import { ServiceProvider } from "../elements/service-provider";
 import GitgubApolloService from "../../services/githubApolloService";
 import "./Main.scss";
 
-const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
+const Main = ({
+  service: githubApi,
+  onAuth,
+}: {
+  service: GitgubApolloService;
+  onAuth: CallableFunction;
+}) => {
   const [state, setState] = useState<{
     data: any;
     fetching: boolean;
@@ -57,7 +63,7 @@ const Main = ({ service: githubApi }: { service: GitgubApolloService }) => {
       {(state.data || status || state.fetching) && (
         <FetchStatus
           render={() => (
-            <ServiceProvider value={{ data: state.data, githubApi }}>
+            <ServiceProvider value={{ data: state.data, githubApi, onAuth }}>
               <IssuesCabinet initialData={state.data} />
             </ServiceProvider>
           )}

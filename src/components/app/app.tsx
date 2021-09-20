@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, RefObject } from "react";
 import Main from "../Main";
 import BGC from "./background";
 import { ServiceProvider } from "../elements/service-provider";
@@ -15,6 +15,7 @@ const githubApi = new GithubApolloService();
 
 const App = () => {
   const [client, setClient] = useState<GithubApolloService>(githubApi);
+  const authBtn = useRef<HTMLButtonElement>(null);
 
   const Authnticate = (token?: string) =>
     setClient(new GithubApolloService(token));
@@ -22,9 +23,9 @@ const App = () => {
   return (
     <div className="app">
       <ServiceProvider value={client}>
-        <Main />
+        <Main onAuth={() => authBtn.current?.click()} />
       </ServiceProvider>
-      <Auth Authnticate={Authnticate} testifyApi={testifyApi} />
+      <Auth aref={authBtn} Authnticate={Authnticate} testifyApi={testifyApi} />
       <BGC />
     </div>
   );

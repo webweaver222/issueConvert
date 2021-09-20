@@ -1,15 +1,19 @@
 import React, { FC } from "react";
+import { AuthRedirect } from "../Auth/AuthRedirect";
 import { withData } from "./withData";
 import { CommentFormComponent } from "../CommentForm/CommentForm";
 
-const Test = () => {
-  return <div>1</div>;
-};
-
 const withAuthRequired = (Wrapped: FC<any>) =>
   withData((props: CommentFormComponent) => {
-    if (!props.service.githubApi.oauth) {
-      return <Test />;
+    const {
+      service: {
+        githubApi: { oauth },
+        onAuth,
+      },
+    } = props;
+
+    if (!oauth) {
+      return <AuthRedirect onAuth={onAuth} />;
     }
 
     return <Wrapped {...props} />;
