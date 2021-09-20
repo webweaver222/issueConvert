@@ -15,9 +15,17 @@ class GithubApolloService {
   client: ApolloClient<NormalizedCacheObject>;
   url: string = "https://api.github.com/graphql";
   token: string = config.github_token;
+  oauth: boolean = false;
 
   constructor(oauth_token?: string) {
-    if (oauth_token) this.token = oauth_token;
+    if (oauth_token) {
+      this.token = oauth_token;
+      this.oauth = true;
+    } else {
+      this.token = config.github_token;
+      this.oauth = false;
+    }
+
     const httpLink = new HttpLink({ uri: this.url });
 
     const authLink = setContext((_, { headers }) => {

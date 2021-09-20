@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import GithubApolloService from "../../services/githubApolloService";
-import { withData } from "../hoc/withData";
 import FetchStatus from "../elements/fetchStatus";
 import { IssueDetailsComponent } from "../../containers/IssueDetailsContainer";
-import "./CommentForm.scss";
+import withAuthRequired from "../hoc/withAuthRequired";
 
 interface CommentFormComponent extends IssueDetailsComponent {
   service: { githubApi: GithubApolloService };
@@ -70,4 +69,5 @@ const CommentForm = (props: CommentFormComponent) => {
   );
 };
 
-export default withData(CommentForm);
+export default withAuthRequired(CommentForm);
+export type { CommentFormComponent };
