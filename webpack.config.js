@@ -47,7 +47,19 @@ module.exports = (env = {}) => {
       rules: [
         { test: /\.tsx?$/, loader: "babel-loader", exclude: /node_modules/ },
         { test: /\.css$/, use: getStyleLoaders() },
-        { test: /\.s[ca]ss$/, use: [...getStyleLoaders(), "sass-loader"] },
+        {
+          test: /\.s[ca]ss$/,
+          use: [
+            ...getStyleLoaders(),
+            "sass-loader",
+            {
+              loader: "sass-resources-loader",
+              options: {
+                resources: ["./src/resources/vars.scss"],
+              },
+            },
+          ],
+        },
         {
           test: /\.(ttf|otf|eof|woff|woff2|eot)$/,
           use: [

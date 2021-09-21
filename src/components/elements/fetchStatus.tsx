@@ -18,7 +18,7 @@ const FetchStatus = ({
   if (fetching)
     content = () => (
       <div className="statusWrapper">
-        <Spinner width="50" height="50" />
+        <Spinner width="50" height="50" color="#5776f6" />
       </div>
     );
 

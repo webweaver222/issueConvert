@@ -80,7 +80,7 @@ const Auth = ({
   return (
     <div className="AuthWrapper">
       <button ref={aref} onClick={onAuth}>
-        Auth
+        LogIn with GitHub
       </button>
     </div>
   );

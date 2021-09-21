@@ -14,8 +14,11 @@ const IssuesCabinet = ({
 
   return (
     <div className="IssueCabinetWrapper">
-      <IssuesList onIssueClick={(id: string) => setCurrentIssue(id)} />
-      <IssueDetails issueId={currentIssueId} />
+      <header>PepoName</header>
+      <main>
+        <IssuesList onIssueClick={(id: string) => setCurrentIssue(id)} />
+        <IssueDetails issueId={currentIssueId} />
+      </main>
     </div>
   );
 };

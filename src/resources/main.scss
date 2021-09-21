@@ -1,9 +1,7 @@
 html {
   overflow: hidden;
   body {
-    #root {
-      font-size: 16px;
-    }
+    font-size: 16px;
   }
 }
 
@@ -16,6 +14,13 @@ html {
 @font-face {
   font-family: "montserrat";
   src: url("./fonts/Montserrat-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "oxygen";
+  src: url("./fonts/Oxygen-Light.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -36,41 +41,60 @@ html {
   }
 }
 
-.button {
-  position: relative;
-  display: block;
-  width: 200px;
-  height: 36px;
-  border-radius: 18px;
-  background-color: #333538;
-  border: solid 1px transparent;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 300;
+button {
+  display: inline-block;
   cursor: pointer;
-  transition: all 0.5s ease-in-out;
-  &:hover {
-    background-color: #474e57;
-    border-color: #474e57;
-    transition: all 0.1s ease-in-out;
-  }
-}
-
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
+  text-align: center;
+  vertical-align: top;
+  text-decoration: none;
+  transition: all 0.3s ease;
   position: relative;
-  label {
-    font-family: druk;
-    text-align: center;
-    margin-bottom: 12px;
+
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "montserrat";
+  line-height: 20px;
+  letter-spacing: 0.1px;
+
+  max-width: 312px;
+
+  padding: 11px 28px;
+  background-color: $main-color;
+  color: #ffff;
+
+  border: 1px solid $main-color;
+  border-radius: 4px;
+
+  &:hover {
+    background: darken($main-color, 5%);
   }
 }
 
 input {
-  border: 1px solid black;
-  border-radius: 20px;
-  padding: 5px;
+  border: 1px solid $grey;
+  border-radius: 6px;
+  padding: 12px;
+  height: 44px;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  transition: all 0.3s ease;
+  outline: none;
+  position: relative;
+
+  &:focus,
+  &:hover {
+    border-color: $main-color;
+    background-color: $accent-color;
+  }
+}
+
+.btn--medium {
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  padding: 7px 15px;
 }
 
 *:focus {
@@ -148,7 +172,6 @@ input {
     bottom: 0;
     width: 100%;
     height: 50px;
-    //background-color: rgba(255, 255, 255, 0.8);
     display: flex;
   }
 }

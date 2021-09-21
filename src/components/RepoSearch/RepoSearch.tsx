@@ -66,7 +66,7 @@ const RepoSearch = ({
             />
           </ul>
           <button
-            className="button"
+            className="btn btn--medium"
             style={{ display: selectedRepo.id ? "inline-block" : "none" }}
             onClick={() => onFetchRepo!(selectedRepo.id)}
           >
