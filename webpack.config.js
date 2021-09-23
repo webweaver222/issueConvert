@@ -60,6 +60,7 @@ module.exports = (env = {}) => {
             },
           ],
         },
+        { test: /\.svg$/, loader: "svg-inline-loader" },
         {
           test: /\.(ttf|otf|eof|woff|woff2|eot)$/,
           use: [

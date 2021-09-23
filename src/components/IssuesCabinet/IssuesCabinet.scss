@@ -4,9 +4,29 @@
   height: 100vh;
   width: 100%;
   header {
-    padding: 20px 0;
+    padding: 20px 10px;
     background-color: #fff;
     border-bottom: 1px solid $border-color;
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-left: 15px;
+      letter-spacing: 0.3px;
+      font-family: "montserrat";
+      font-size: 15px;
+    }
+
+    .arrow {
+      width: 16px;
+      height: 14px;
+      color: $main-color;
+      cursor: pointer;
+
+      &:hover {
+        color: darken($main-color, 5%);
+      }
+    }
   }
 
   main {

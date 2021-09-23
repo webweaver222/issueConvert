@@ -105,6 +105,12 @@ class GithubApolloService {
                     comments {
                       totalCount
                     }
+                    author {
+                      login
+                      avatarUrl(size: 30)
+                    }
+                    state
+                    closed
                   }
                   cursor
                 }

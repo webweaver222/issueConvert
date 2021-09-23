@@ -176,6 +176,14 @@ input {
   }
 }
 
+.card {
+  cursor: pointer;
+  overflow: hidden;
+  background-color: #fff;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+}
+
 .authRedirect {
   text-align: center;
   span {

@@ -1,0 +1,36 @@
+.IssueCardWrapper {
+  margin-bottom: 15px;
+  .IssueCard {
+    //height: 100px;
+    transition: all 0.3s ease;
+    border-left: 4px solid $border-color;
+    header {
+    }
+
+    main {
+    }
+
+    footer {
+    }
+  }
+
+  .calendar {
+    width: 14px;
+    height: 15px;
+  }
+
+  .comments {
+    width: 13px;
+    height: 14px;
+  }
+
+  .checkbox {
+    width: 16px;
+    height: 10px;
+  }
+
+  &:hover {
+    border: 1px solid $main-color;
+    border-left: 4px solid $main-color;
+  }
+}

@@ -32,6 +32,7 @@ const Main = ({
     githubApi
       .getIssues("MDEwOlJlcG9zaXRvcnkyMzY4MzI2MTM==")
       .then(({ data }) => {
+        console.log(data);
         setState({ ...state, data: data.node, fetching: false });
       })
       .catch((e) => {
@@ -64,7 +65,10 @@ const Main = ({
         <FetchStatus
           render={() => (
             <ServiceProvider value={{ data: state.data, githubApi, onAuth }}>
-              <IssuesCabinet initialData={state.data} />
+              <IssuesCabinet
+                initialData={state.data}
+                onReturn={() => setState({ ...state, data: null })}
+              />
             </ServiceProvider>
           )}
           fetching={state.fetching}

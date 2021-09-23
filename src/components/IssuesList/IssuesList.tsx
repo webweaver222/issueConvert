@@ -1,6 +1,7 @@
 import React from "react";
 import { compose } from "../../utils";
 
+import IssueCard from "../elements/IssueCard";
 import IssueListContainer from "../../containers/IssueListContainer";
 import withInfiniteScroll from "../hoc/withInfiniteScroll";
 import Spinner from "../elements/spinner";
@@ -26,6 +27,9 @@ const IssuesList = ({
       <div className="IssuesListWrapper fancyScrollBar" ref={wrapper}>
         <div className="issueList" ref={list}>
           {issues!.map((issue) => (
+            <IssueCard issue={issue} onIssueClick={onIssueClick} />
+          ))}
+          {/*moreIssues.map((issue) => (
             <div
               className="issueItem"
               key={issue.node.id}
@@ -34,17 +38,7 @@ const IssuesList = ({
               <h2>{issue.node.title}</h2>
               <p>{issue.node.body}</p>
             </div>
-          ))}
-          {moreIssues.map((issue) => (
-            <div
-              className="issueItem"
-              key={issue.node.id}
-              onClick={() => onIssueClick(issue.node.id)}
-            >
-              <h2>{issue.node.title}</h2>
-              <p>{issue.node.body}</p>
-            </div>
-          ))}
+          ))*/}
         </div>
       </div>
       {spinner}

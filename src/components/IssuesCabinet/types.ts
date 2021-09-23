@@ -13,6 +13,14 @@ interface IssuesItem {
     body: string;
     id: string;
     createdAt: string;
+    comments: {
+      totalCount: number;
+    };
+    author: {
+      login: string;
+      avatarUrl: string;
+    };
+    state: string;
   };
   cursor: string;
 }
