@@ -80,7 +80,7 @@ class GithubApolloService {
       },
     });
   };
-
+  //  states: OPEN
   getIssues = (id: string, cursor?: string) => {
     return this.client.query({
       query: gql`

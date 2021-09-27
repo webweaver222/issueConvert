@@ -2,6 +2,7 @@ html {
   overflow: hidden;
   body {
     font-size: 16px;
+    letter-spacing: 0.3px;
   }
 }
 
@@ -195,7 +196,7 @@ input {
 .fancyScrollBar {
   &:hover {
     &::-webkit-scrollbar-thumb {
-      background: black;
+      background: $main-color;
     }
   }
 
@@ -213,5 +214,20 @@ input {
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background: transparent;
+  }
+
+  .calendar {
+    width: 14px;
+    height: 15px;
+  }
+
+  .comments {
+    width: 13px;
+    height: 14px;
+  }
+
+  .checkbox {
+    width: 16px;
+    height: 10px;
   }
 }

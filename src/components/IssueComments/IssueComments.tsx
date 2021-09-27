@@ -4,6 +4,8 @@ import Spinner from "../elements/spinner";
 import FetchStatus from "../elements/fetchStatus";
 import "./IssueComments.scss";
 
+import CommentCard from "../elements/CommentCard";
+
 const IssueComments = ({
   comments,
   moreComments,
@@ -29,10 +31,7 @@ const IssueComments = ({
     return (
       items &&
       items.map((item) => (
-        <div className="IssueComment" key={item.node.id}>
-          {item.node.body}
-          <div className="commentAuthor">by {item.node.author.login}</div>
-        </div>
+        <CommentCard comment={item} onIssueClick={() => {}} />
       ))
     );
   };

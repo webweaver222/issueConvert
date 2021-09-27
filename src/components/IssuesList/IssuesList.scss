@@ -1,18 +1,18 @@
 .IssuesListContainer {
-  width: 40%;
-  padding: 20px 0 0 0;
+  width: 35%;
   border-right: 1px solid $border-color;
   background-color: rgba(153, 172, 248, 0.1);
 }
 
 .IssuesListWrapper {
+  padding: 20px 0 0 0;
   width: 100%;
   overflow-y: auto;
   //border: 1px solid black;
   position: relative;
 
   .issueList {
-    padding: 0 3px 0 10px;
+    padding: 0 13px 0 10px;
   }
 
   .issueItem {

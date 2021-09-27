@@ -30,4 +30,13 @@ const debounceScroll = (func: Function, cb: Function) => {
   };
 };
 
-export { compose, debounceSearch, debounceScroll };
+const dateFormat = (date: string) =>
+  new Date(date).toLocaleString("eng", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+export { compose, debounceSearch, debounceScroll, dateFormat };

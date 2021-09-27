@@ -1,0 +1,57 @@
+.CommentCardWrapper {
+  .CommentCard {
+    margin: 10px 0;
+    height: 120px; //adjust  for big screens
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+
+    .cardHeader {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 10px;
+
+      svg {
+        color: $main-color;
+      }
+
+      span {
+        font-size: 14px;
+        margin-left: 7px;
+      }
+    }
+
+    .cardBody {
+      white-space: pre-line;
+      height: 80%;
+      overflow: hidden;
+      border-bottom: 1px solid $border-color;
+      padding: 14px 10px 10px 10px;
+    }
+
+    .cardFooter {
+      display: flex;
+      align-items: center;
+      padding: 10px 7px;
+      img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+      }
+
+      span {
+        margin-left: 10px;
+      }
+    }
+
+    &:hover {
+      border: 1px solid $main-color;
+    }
+  }
+}

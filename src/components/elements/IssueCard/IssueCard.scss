@@ -4,33 +4,86 @@
     //height: 100px;
     transition: all 0.3s ease;
     border-left: 4px solid $border-color;
-    header {
+    padding: 10px 0 0 0;
+
+    .cardHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
+
+      .cardLogin {
+        margin: 0 auto 0 10px;
+      }
+
+      .issueStatus {
+        color: $green;
+        display: flex;
+        align-items: center;
+        .checkbox {
+          width: 14px;
+          height: 14px;
+        }
+        span {
+          font-size: 13px;
+          margin-left: 7px;
+        }
+      }
     }
 
-    main {
+    .cardBody {
+      display: flex;
+      align-items: center;
+      padding: 20px 10px;
+      border-bottom: 1px solid $border-color;
+      .icon-wrapper {
+        background-color: $accent-color;
+        padding: 10px;
+        border-radius: 4px;
+        svg.brain {
+          width: 16px;
+          height: 18px;
+          color: $main-color;
+        }
+      }
+
+      span {
+        margin-left: 15px;
+        line-height: 20px;
+        font-weight: bold;
+      }
     }
 
-    footer {
+    .cardFooter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+
+      .issueDate,
+      .issueComments {
+        display: flex;
+        align-items: center;
+
+        svg {
+          color: $main-color;
+          margin-right: 7px;
+        }
+
+        span {
+          font-size: 14px;
+        }
+      }
     }
-  }
 
-  .calendar {
-    width: 14px;
-    height: 15px;
-  }
-
-  .comments {
-    width: 13px;
-    height: 14px;
-  }
-
-  .checkbox {
-    width: 16px;
-    height: 10px;
-  }
-
-  &:hover {
-    border: 1px solid $main-color;
-    border-left: 4px solid $main-color;
+    &:hover {
+      border: 1px solid $main-color;
+      border-left: 4px solid $main-color;
+    }
   }
 }

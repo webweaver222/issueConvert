@@ -27,18 +27,19 @@ const IssuesList = ({
       <div className="IssuesListWrapper fancyScrollBar" ref={wrapper}>
         <div className="issueList" ref={list}>
           {issues!.map((issue) => (
-            <IssueCard issue={issue} onIssueClick={onIssueClick} />
-          ))}
-          {/*moreIssues.map((issue) => (
-            <div
-              className="issueItem"
+            <IssueCard
+              issue={issue}
+              onIssueClick={onIssueClick}
               key={issue.node.id}
-              onClick={() => onIssueClick(issue.node.id)}
-            >
-              <h2>{issue.node.title}</h2>
-              <p>{issue.node.body}</p>
-            </div>
-          ))*/}
+            />
+          ))}
+          {moreIssues!.map((issue) => (
+            <IssueCard
+              issue={issue}
+              onIssueClick={onIssueClick}
+              key={issue.node.id}
+            />
+          ))}
         </div>
       </div>
       {spinner}
