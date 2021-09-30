@@ -33,6 +33,13 @@
       overflow: hidden;
       border-bottom: 1px solid $border-color;
       padding: 14px 10px 10px 10px;
+      position: relative;
+
+      span {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+      }
     }
 
     .cardFooter {

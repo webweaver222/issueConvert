@@ -28,12 +28,10 @@ const IssueComments = ({
   );
 
   const renderItems = (items: IssueCommentsType[]) => {
-    return (
-      items &&
-      items.map((item) => (
-        <CommentCard comment={item} onIssueClick={() => {}} />
-      ))
-    );
+    if (!items) return;
+    return items.map((item, i) => (
+      <CommentCard comment={item} onIssueClick={() => {}} key={item.node.id} />
+    ));
   };
 
   return (
