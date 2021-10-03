@@ -1,10 +1,12 @@
-import React, { RefObject } from "react";
+import React, { RefObject, FC } from "react";
 import { IssueComments as IssueCommentsType } from "../IssueDetails/types";
 import Spinner from "../elements/spinner";
 import FetchStatus from "../elements/fetchStatus";
 import "./IssueComments.scss";
 
 import CommentCard from "../elements/CommentCard";
+import withModal from "../hoc/withModal";
+import { compose } from "../../utils";
 
 const IssueComments = ({
   comments,
@@ -30,7 +32,7 @@ const IssueComments = ({
   const renderItems = (items: IssueCommentsType[]) => {
     if (!items) return;
     return items.map((item, i) => (
-      <CommentCard comment={item} onIssueClick={() => {}} key={item.node.id} />
+      <CommentCard comment={item} key={item.node.id} />
     ));
   };
 

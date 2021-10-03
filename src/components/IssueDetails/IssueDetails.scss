@@ -2,7 +2,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100%;
   //padding: 0 10px;
 
   .statusWrapper {
@@ -12,7 +12,7 @@
   .IssueTextWrapper {
     width: 100%;
     margin: 0 auto;
-    height: 40vh;
+    height: 40%;
     overflow: auto;
     border-bottom: 1px solid $border-color;
     background-color: #fff;
@@ -26,10 +26,12 @@
   .controls {
     padding: 12px;
     //margin-top: 15px;
-    background-color: #5e9ce2;
-    text-align: center;
+    background-color: $accent-color;
+    text-align: left;
 
     button {
+      font-size: 14px;
+      padding: 5px;
     }
   }
 }

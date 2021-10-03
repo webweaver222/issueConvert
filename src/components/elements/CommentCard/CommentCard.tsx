@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import { IssueComments } from "../../IssueDetails/types";
 import { dateFormat } from "../../../utils";
 import "./CommentCard.scss";
+import withModal from "../../hoc/withModal";
+import ExpanedComment from "../ExpanedComment";
+import { compose } from "../../../utils";
 
 const CommentCard = ({
   comment,
-  onIssueClick,
+  onOpenModal,
 }: {
   comment: IssueComments;
-  onIssueClick: Function;
+  onOpenModal: () => void;
 }) => {
   const {
     node: {
@@ -22,15 +25,10 @@ const CommentCard = ({
 
   const [overflowed, setOver] = useState(false);
 
-  useEffect(() => {
-    setOver(cardBody.scrollHeight > cardBody.clientHeight);
-  }, []);
+  useEffect(() => setOver(cardBody.scrollHeight > cardBody.clientHeight), []);
 
   return (
-    <div
-      className="CommentCardWrapper"
-      /*onClick={() => onIssueClick(id)}*/
-    >
+    <div className="CommentCardWrapper" onClick={onOpenModal}>
       <div className="card CommentCard">
         <div className="cardHeader">
           <svg className="calendar">
@@ -40,12 +38,19 @@ const CommentCard = ({
         </div>
         <div
           className="cardBody"
+          style={overflowed ? { paddingBottom: "20px" } : {}}
           ref={(node) => {
             if (node) cardBody = node;
           }}
         >
           {body}
-          <span>{overflowed && "more"}</span>
+          {overflowed && (
+            <div className="overflowed">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          )}
         </div>
         <div className="cardFooter">
           <img src={avatarUrl} alt="userAvatar.png" />
@@ -56,4 +61,4 @@ const CommentCard = ({
   );
 };
 
-export default CommentCard;
+export default compose(withModal(ExpanedComment))(CommentCard);

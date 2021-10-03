@@ -7,14 +7,24 @@ const withModal =
   (modalScernario: (props: any) => JSX.Element) =>
   (Wrapped: FC<IssueDetailsComponent>) =>
   (props: IssueDetailsComponent) => {
-    const [opened, setOpened] = useState(false);
+    console.log(props);
+    const [state, setState] = useState<{
+      opened: boolean;
+    }>({
+      opened: false,
+    });
 
-    const openModal = () => setOpened(true);
+    const openModal = () => {
+      setState({ ...state, opened: true });
+    };
 
     return (
       <>
-        {opened && (
-          <Modal propsToChildren={props} onClose={() => setOpened(false)}>
+        {state.opened && (
+          <Modal
+            propsToChildren={props}
+            onClose={() => setState({ ...state, opened: false })}
+          >
             {modalScernario}
           </Modal>
         )}

@@ -230,4 +230,23 @@ input {
     width: 16px;
     height: 10px;
   }
+
+  .overflowed {
+    padding: 3px;
+    background-color: rgb(235, 227, 227);
+    border-radius: 4px;
+    line-height: 8px;
+    span {
+      display: inline-block;
+      border-radius: 50%;
+      width: 8px;
+      height: 8px;
+      background-color: rgb(212, 209, 209);
+      margin-right: 4px;
+    }
+
+    :last-child {
+      margin-right: 0;
+    }
+  }
 }

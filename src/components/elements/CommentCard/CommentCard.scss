@@ -35,10 +35,10 @@
       padding: 14px 10px 10px 10px;
       position: relative;
 
-      span {
+      .overflowed {
         position: absolute;
         bottom: 5px;
-        right: 5px;
+        right: 50%;
       }
     }
 

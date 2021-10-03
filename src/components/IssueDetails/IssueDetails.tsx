@@ -35,9 +35,11 @@ const IssueDetails = ({
         listFetching={listFetching}
       />
 
-      {/*<div className="controls">
-        <button onClick={onOpenModal}>Add Comment</button>
-  </div>*/}
+      {
+        <div className="controls">
+          <button onClick={onOpenModal}>Add Comment</button>
+        </div>
+      }
     </div>
   );
 };
