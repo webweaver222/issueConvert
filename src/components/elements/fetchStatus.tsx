@@ -13,7 +13,7 @@ const FetchStatus = ({
   status: string;
   onReset: (() => void) | null;
 }) => {
-  let content: () => JSX.Element = render;
+  let content = render;
 
   if (fetching)
     content = () => (

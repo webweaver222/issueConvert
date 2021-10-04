@@ -90,7 +90,6 @@ class GithubApolloService {
               nameWithOwner
               id
               issues(
-                states: OPEN
                 first: $qnty
                 orderBy: { field: CREATED_AT, direction: DESC }
                 after: $cursor

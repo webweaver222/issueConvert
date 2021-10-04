@@ -1,6 +1,18 @@
 .AuthWrapper {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  font-size: 14px;
+  button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 15px;
+    background-color: #fff;
+    color: $main-color;
+    padding: 7px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: darken($main-color, 20%);
+      border-color: darken($main-color, 20%);
+    }
+  }
 }

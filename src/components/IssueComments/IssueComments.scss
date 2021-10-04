@@ -1,13 +1,14 @@
 .IssueCommentsContainer {
   flex: 1 1;
   background-color: rgba(153, 172, 248, 0.1);
+  padding-right: 1px;
 
   .IssueCommentsWrapper {
     width: 100%;
     overflow-y: auto;
 
     .IssueCommentsList {
-      padding: 0 4px;
+      padding: 0 7px;
       .IssueComment {
         white-space: pre-line;
         overflow: hidden;

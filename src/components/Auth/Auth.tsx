@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import useDidUpdateEffect from "../customHooks/didUpdateEffect";
 import TestifyApi from "../../services/testifyApi";
 
+import withModal from "../hoc/withModal";
+import FetchStatus from "../elements/fetchStatus";
+import { compose } from "../../utils";
+
 import config from "../../../config";
 const { client_id, client_secret } = config;
 
@@ -11,10 +15,12 @@ const Auth = ({
   Authnticate,
   testifyApi,
   aref,
+  onOpenModal,
 }: {
   Authnticate: Function;
   testifyApi: TestifyApi;
   aref: any;
+  onOpenModal: () => void;
 }) => {
   const codeLink =
     "https://github.com/login/oauth/authorize?client_id=" +
@@ -24,8 +30,10 @@ const Auth = ({
 
   const [state, setState] = useState<{
     code: string;
+    error: string;
   }>({
     code: "",
+    error: "",
   });
 
   const { code } = state;
@@ -47,6 +55,7 @@ const Auth = ({
           if (body.token) Authnticate(body.token);
         }
       } catch (e) {
+        onOpenModal();
         console.log(e, "access_token fail");
       }
     })();
@@ -86,4 +95,13 @@ const Auth = ({
   );
 };
 
-export default Auth;
+export default compose(
+  withModal(() => (
+    <FetchStatus
+      onReset={null}
+      render={() => <></>}
+      fetching={false}
+      status="Authentication error. Please Try again later."
+    />
+  ))
+)(Auth);
