@@ -24,7 +24,6 @@ const Main = ({
     fetching: false,
     status: "",
   });
-  console.log(state.data);
 
   useEffect(() => {
     setState((state) => ({ ...state, fetching: true }));

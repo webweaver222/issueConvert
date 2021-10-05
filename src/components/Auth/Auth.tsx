@@ -3,7 +3,7 @@ import useDidUpdateEffect from "../customHooks/didUpdateEffect";
 import TestifyApi from "../../services/testifyApi";
 
 import withModal from "../hoc/withModal";
-import FetchStatus from "../elements/fetchStatus";
+import { AuthErrorMessage } from "../elements/authErrorMsg";
 import { compose } from "../../utils";
 
 import config from "../../../config";
@@ -31,9 +31,13 @@ const Auth = ({
   const [state, setState] = useState<{
     code: string;
     error: string;
+    fetching: boolean;
+    user: any;
   }>({
     code: "",
     error: "",
+    fetching: false,
+    user: null,
   });
 
   const { code } = state;
@@ -47,14 +51,18 @@ const Auth = ({
 
     (async () => {
       try {
+        setState({ ...state, fetching: true });
         const res = await testifyApi.getToken(data, "/test/token");
 
         if (res.ok) {
           const body = await res.json();
 
+          setState({ ...state, fetching: false, user: body.user });
+
           if (body.token) Authnticate(body.token);
         }
       } catch (e) {
+        setState({ ...state, fetching: false });
         onOpenModal();
         console.log(e, "access_token fail");
       }
@@ -88,20 +96,22 @@ const Auth = ({
 
   return (
     <div className="AuthWrapper">
-      <button ref={aref} onClick={onAuth}>
-        LogIn with GitHub
-      </button>
+      {state.user && !state.fetching ? (
+        <div className="userWrapper">
+          <span>{state.user.login}</span>
+          <img src={state.user.avatar_url} alt="userAvatar" />
+        </div>
+      ) : !state.fetching && !state.user ? (
+        <button ref={aref} onClick={onAuth}>
+          LogIn with GitHub
+        </button>
+      ) : (
+        <div className="loaderWrapper">
+          <span>Authenticating...</span>
+        </div>
+      )}
     </div>
   );
 };
 
-export default compose(
-  withModal(() => (
-    <FetchStatus
-      onReset={null}
-      render={() => <></>}
-      fetching={false}
-      status="Authentication error. Please Try again later."
-    />
-  ))
-)(Auth);
+export default compose(withModal(AuthErrorMessage))(Auth);
