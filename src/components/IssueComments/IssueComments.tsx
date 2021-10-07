@@ -5,8 +5,6 @@ import FetchStatus from "../elements/fetchStatus";
 import "./IssueComments.scss";
 
 import CommentCard from "../elements/CommentCard";
-import withModal from "../hoc/withModal";
-import { compose } from "../../utils";
 
 const IssueComments = ({
   comments,

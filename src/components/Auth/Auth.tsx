@@ -1,111 +1,61 @@
-import React, { useState } from "react";
-import useDidUpdateEffect from "../customHooks/didUpdateEffect";
-import TestifyApi from "../../services/testifyApi";
+import React, { useState, useEffect } from "react";
 
+import AuthContainer from "../../containers/AuthContainer";
 import withModal from "../hoc/withModal";
+import { AuthComponent } from "../../containers/AuthContainer";
 import { AuthErrorMessage } from "../elements/authErrorMsg";
 import { compose } from "../../utils";
 
-import config from "../../../config";
-const { client_id, client_secret } = config;
-
 import "./Auth.scss";
 
-const Auth = ({
-  Authnticate,
-  testifyApi,
-  aref,
-  onOpenModal,
-}: {
-  Authnticate: Function;
-  testifyApi: TestifyApi;
-  aref: any;
-  onOpenModal: () => void;
-}) => {
-  const codeLink =
-    "https://github.com/login/oauth/authorize?client_id=" +
-    client_id +
-    "&login=" +
-    "&scope=public_repo";
+const Auth = (props: AuthComponent) => {
+  const { user, fetching, onAuthClick, aref } = props;
 
-  const [state, setState] = useState<{
-    code: string;
-    error: string;
-    fetching: boolean;
-    user: any;
-  }>({
-    code: "",
-    error: "",
-    fetching: false,
-    user: null,
+  const [state, setState] = useState({
+    menuOpened: false,
   });
 
-  const { code } = state;
-
-  useDidUpdateEffect(() => {
-    const data = {
-      client_id,
-      client_secret,
-      code,
-    };
-
-    (async () => {
-      try {
-        setState({ ...state, fetching: true });
-        const res = await testifyApi.getToken(data, "/test/token");
-
-        if (res.ok) {
-          const body = await res.json();
-
-          setState({ ...state, fetching: false, user: body.user });
-
-          if (body.token) Authnticate(body.token);
-        }
-      } catch (e) {
-        setState({ ...state, fetching: false });
-        onOpenModal();
-        console.log(e, "access_token fail");
-      }
-    })();
-  }, [code]);
-
-  const onAuth = async () => {
-    const popup = window.open(codeLink, "GitHub OAuth", "width=500,height=500");
-
-    const pollTimer = window.setInterval(async function () {
-      try {
-        if (popup!.closed) {
-          window.clearInterval(pollTimer);
-        }
-
-        if (popup!.document.URL.includes(location.origin)) {
-          window.clearInterval(pollTimer);
-
-          const url = new URL(popup!.location.href);
-
-          setState({ ...state, code: url.searchParams.get("code")! });
-          await new Promise((resolve) =>
-            setTimeout(() => resolve(popup!.close()), 100)
-          );
-        }
-      } catch (e) {
-        console.log(e, "popup error");
-      }
-    }, 100);
+  const el = function () {
+    setState({ ...state, menuOpened: false });
   };
+
+  useEffect(() => {
+    document.addEventListener("click", el);
+    console.log("ds");
+    return () => document.removeEventListener("click", el, false);
+  }, []);
 
   return (
     <div className="AuthWrapper">
-      {state.user && !state.fetching ? (
+      {user && !fetching && (
         <div className="userWrapper">
-          <span>{state.user.login}</span>
-          <img src={state.user.avatar_url} alt="userAvatar" />
+          <span>{user.login}</span>
+          <img
+            src={user.avatar_url}
+            alt="userAvatar"
+            onClick={(e) => {
+              e.stopPropagation();
+              setState({ ...state, menuOpened: true });
+            }}
+          />
+
+          {state.menuOpened && (
+            <div className="dropdown">
+              <ul>
+                <li>Log out</li>
+              </ul>
+            </div>
+          )}
         </div>
-      ) : !state.fetching && !state.user ? (
-        <button ref={aref} onClick={onAuth}>
+      )}
+
+      {!fetching && !user && (
+        <button ref={aref} onClick={onAuthClick}>
           LogIn with GitHub
         </button>
-      ) : (
+      )}
+
+      {fetching && (
         <div className="loaderWrapper">
           <span>Authenticating...</span>
         </div>
@@ -114,4 +64,4 @@ const Auth = ({
   );
 };
 
-export default compose(withModal(AuthErrorMessage))(Auth);
+export default compose(withModal(AuthErrorMessage), AuthContainer)(Auth);

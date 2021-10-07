@@ -8,7 +8,13 @@
     overflow-y: auto;
 
     .IssueCommentsList {
+      height: 100%;
       padding: 0 7px;
+
+      .statusWrapper {
+        height: 100%;
+      }
+
       .IssueComment {
         white-space: pre-line;
         overflow: hidden;

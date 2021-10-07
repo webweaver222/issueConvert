@@ -3,14 +3,14 @@ import Main from "../Main";
 import BGC from "./background";
 import { ServiceProvider } from "../elements/service-provider";
 import GithubApolloService from "../../services/githubApolloService";
-import TestifyApi from "../../services/testifyApi";
+import AuthApi from "../../services/authApi";
 
 import "resources/reset.scss";
 import "resources/main.scss";
 
 import Auth from "../Auth";
 
-const testifyApi = new TestifyApi();
+const authApi = new AuthApi();
 const githubApi = new GithubApolloService();
 
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
       <ServiceProvider value={client}>
         <Main onAuth={() => authBtn.current?.click()} />
       </ServiceProvider>
-      <Auth aref={authBtn} Authnticate={Authnticate} testifyApi={testifyApi} />
+      <Auth aref={authBtn} Authnticate={Authnticate} authApi={authApi} />
       <BGC />
     </div>
   );
