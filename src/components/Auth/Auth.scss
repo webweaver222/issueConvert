@@ -11,10 +11,32 @@
     font-size: 15px;
     position: relative;
 
+    .overlay {
+      z-index: 99;
+      background-color: transparent;
+    }
+
     .dropdown {
+      z-index: 100;
       position: absolute;
-      bottom: -20px;
+      bottom: -30px;
       right: 0;
+      font-family: montserrat;
+      ul {
+        background-color: #fff;
+        color: black;
+        border: 1px solid #d0d7de;
+        border-radius: 3px;
+        box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+        li {
+          padding: 5px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $main-color;
+          }
+        }
+      }
     }
 
     img {

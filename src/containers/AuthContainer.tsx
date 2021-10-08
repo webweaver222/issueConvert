@@ -26,6 +26,7 @@ interface AuthComponent {
   user: any;
   fetching: boolean;
   onAuthClick: MouseEventHandler;
+  onSignOut: Function;
   aref: RefObject<HTMLButtonElement>;
 }
 
@@ -49,6 +50,13 @@ const AuthContainer =
           if (code) setState({ ...state, code });
         });
       }
+    };
+
+    const onSignOut = () => {
+      console.log("f");
+      localStorage.removeItem("data");
+      setState({ ...state, user: null });
+      Authnticate();
     };
 
     useEffect(() => {
@@ -91,6 +99,7 @@ const AuthContainer =
         user={user}
         onAuthClick={onAuth}
         aref={aref}
+        onSignOut={onSignOut}
       />
     );
   };

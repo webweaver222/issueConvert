@@ -9,21 +9,13 @@ import { compose } from "../../utils";
 import "./Auth.scss";
 
 const Auth = (props: AuthComponent) => {
-  const { user, fetching, onAuthClick, aref } = props;
+  const { user, fetching, onAuthClick, aref, onSignOut } = props;
 
   const [state, setState] = useState({
     menuOpened: false,
   });
 
-  const el = function () {
-    setState({ ...state, menuOpened: false });
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", el);
-    console.log("ds");
-    return () => document.removeEventListener("click", el, false);
-  }, []);
+  const el = () => setState({ ...state, menuOpened: false });
 
   return (
     <div className="AuthWrapper">
@@ -34,17 +26,28 @@ const Auth = (props: AuthComponent) => {
             src={user.avatar_url}
             alt="userAvatar"
             onClick={(e) => {
-              e.stopPropagation();
               setState({ ...state, menuOpened: true });
             }}
           />
 
           {state.menuOpened && (
-            <div className="dropdown">
-              <ul>
-                <li>Log out</li>
-              </ul>
-            </div>
+            <>
+              <div
+                className="overlay"
+                onClick={() => setState({ ...state, menuOpened: false })}
+              ></div>
+              <div className="dropdown">
+                <ul>
+                  <li
+                    onClick={(e) => {
+                      onSignOut();
+                    }}
+                  >
+                    Sign out
+                  </li>
+                </ul>
+              </div>
+            </>
           )}
         </div>
       )}

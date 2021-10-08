@@ -8,38 +8,9 @@
   padding: 20px 0 0 0;
   width: 100%;
   overflow-y: auto;
-  //border: 1px solid black;
   position: relative;
 
   .issueList {
     padding: 0 13px 0 10px;
-  }
-
-  .issueItem {
-    overflow: hidden;
-    height: 100px;
-    background-color: #fff;
-    border: 1px solid $border-color;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    border-left: 4px solid $border-color;
-    transition: all 0.3s ease;
-
-    h2 {
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    div {
-      margin-top: 7px;
-      font-size: 14px;
-      white-space: pre-line;
-    }
-
-    &:hover {
-      border: 1px solid $main-color;
-      border-left: 4px solid $main-color;
-    }
   }
 }

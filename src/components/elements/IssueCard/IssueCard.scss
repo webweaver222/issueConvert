@@ -1,7 +1,7 @@
 .IssueCardWrapper {
   margin-bottom: 15px;
   .IssueCard {
-    //height: 100px;
+    box-shadow: 0 8px 14px rgba(140, 149, 159, 0.2);
     transition: all 0.3s ease;
     border-left: 4px solid $border-color;
     padding: 10px 0 0 0;
