@@ -15,8 +15,6 @@ const Auth = (props: AuthComponent) => {
     menuOpened: false,
   });
 
-  const el = () => setState({ ...state, menuOpened: false });
-
   return (
     <div className="AuthWrapper">
       {user && !fetching && (
@@ -25,9 +23,7 @@ const Auth = (props: AuthComponent) => {
           <img
             src={user.avatar_url}
             alt="userAvatar"
-            onClick={(e) => {
-              setState({ ...state, menuOpened: true });
-            }}
+            onClick={() => setState({ ...state, menuOpened: true })}
           />
 
           {state.menuOpened && (
@@ -38,13 +34,7 @@ const Auth = (props: AuthComponent) => {
               ></div>
               <div className="dropdown">
                 <ul>
-                  <li
-                    onClick={(e) => {
-                      onSignOut();
-                    }}
-                  >
-                    Sign out
-                  </li>
+                  <li onClick={() => onSignOut()}>Sign out</li>
                 </ul>
               </div>
             </>

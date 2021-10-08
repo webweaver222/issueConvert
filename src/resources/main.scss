@@ -62,7 +62,7 @@ button {
 
   max-width: 312px;
 
-  padding: 11px 28px;
+  padding: 9px 24px;
   background-color: $main-color;
   color: #ffff;
 
@@ -143,6 +143,7 @@ input {
   background-color: #fff;
   padding: 30px 20px;
   z-index: 1000;
+  border-radius: 4px;
 
   .statusWrapper.withError {
     i {

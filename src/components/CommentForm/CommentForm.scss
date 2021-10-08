@@ -1,13 +1,16 @@
 .CommentFormWrapper {
-  height: 30vh;
+  min-height: 30vh;
   display: flex;
   flex-direction: column;
+
   textarea {
     resize: vertical;
     max-height: 70%;
+    border: 1px solid $main-color;
   }
   button {
-    width: 100px;
+    font-size: 15px;
+    //width: 100px;
     margin: 20px auto 0 auto;
   }
 }

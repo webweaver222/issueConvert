@@ -4,6 +4,8 @@ import FetchStatus from "../elements/fetchStatus";
 import { IssueDetailsComponent } from "../../containers/IssueDetailsContainer";
 import withAuthRequired from "../hoc/withAuthRequired";
 
+import "./CommentForm.scss";
+
 interface CommentFormComponent extends IssueDetailsComponent {
   service: { githubApi: GithubApolloService; onAuth: MouseEventHandler };
   onClose: () => void;
