@@ -1,7 +1,7 @@
 import config from "../../config";
 
 export default class AuthApi {
-  _base = "http://localhost:3000";
+  _base = "";
 
   _path = "/test/token";
 
