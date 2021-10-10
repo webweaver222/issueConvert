@@ -25,20 +25,6 @@ const Main = ({
     status: "",
   });
 
-  useEffect(() => {
-    setState((state) => ({ ...state, fetching: true }));
-
-    githubApi
-      .getIssues("MDEwOlJlcG9zaXRvcnkyMzY4MzI2MTM==")
-      .then(({ data }) => {
-        console.log(data);
-        setState({ ...state, data: data.node, fetching: false });
-      })
-      .catch((e) => {
-        setState({ ...state, status: e.message, fetching: false });
-      });
-  }, []);
-
   const fetchRepo = (id: string) => {
     setState((state) => ({ ...state, fetching: true }));
 
