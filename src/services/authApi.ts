@@ -1,7 +1,7 @@
 import config from "../../config";
 
 export default class AuthApi {
-  _base = "";
+  _base = `${location.protocol}//${location.hostname}/testifyapi`;
 
   _path = "/test/token";
 
@@ -12,7 +12,7 @@ export default class AuthApi {
   _auth_code_link =
     "https://github.com/login/oauth/authorize?client_id=" +
     this._client_id +
-    "&login=login" +
+    "&login=" +
     "&scope=public_repo";
 
   openPopup = () =>
