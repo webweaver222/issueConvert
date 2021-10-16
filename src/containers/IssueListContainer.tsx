@@ -41,13 +41,16 @@ const IssueListContainer = (Wrapped: FC<IssuesListComponent>) =>
 
       const [moreIssues, setMoreIssues] = useState<IssuesItem[]>([]);
 
-      const cursor = useMemo(
-        () =>
-          moreIssues.length > 0
-            ? moreIssues[moreIssues.length - 1].cursor
-            : issues[issues.length - 1].cursor,
-        [moreIssues.length]
-      );
+      const cursor =
+        issues.length > 0
+          ? useMemo(
+              () =>
+                moreIssues.length > 0
+                  ? moreIssues[moreIssues.length - 1].cursor
+                  : issues[issues.length - 1].cursor,
+              [moreIssues.length]
+            )
+          : "";
 
       const debounced = useCallback(
         debounceScroll(

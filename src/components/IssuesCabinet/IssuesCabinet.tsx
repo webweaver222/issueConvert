@@ -14,7 +14,9 @@ const IssuesCabinet = ({
   onReturn: MouseEventHandler;
   initialData: { nameWithOwner: string; issues: { edges: IssuesItem[] } };
 }) => {
-  const [currentIssueId, setCurrentIssue] = useState(issues[0].node.id);
+  const [currentIssueId, setCurrentIssue] = useState(
+    issues[0] ? issues[0].node.id : ""
+  );
 
   return (
     <div className="IssueCabinetWrapper">

@@ -18,13 +18,16 @@ const IssueDetails = ({
   wrapper,
   list,
   listFetching,
+  entityId,
   onOpenModal,
 }: IssueDetailsComponent) => {
   return (
     <div className="IssueDetailsWrapper">
-      <div className="IssueTextWrapper fancyScrollBar">
-        <p className="IssueText">{issueText}</p>
-      </div>
+      {entityId && (
+        <div className="IssueTextWrapper fancyScrollBar">
+          <p className="IssueText">{issueText}</p>
+        </div>
+      )}
 
       <IssueComments
         comments={comments}
@@ -35,11 +38,11 @@ const IssueDetails = ({
         listFetching={listFetching}
       />
 
-      {
+      {entityId && (
         <div className="controls">
           <button onClick={onOpenModal}>Add Comment</button>
         </div>
-      }
+      )}
     </div>
   );
 };
