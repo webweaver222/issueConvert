@@ -25,6 +25,9 @@ const IssuesList = ({
   return (
     <div className="IssuesListContainer infiniteScroll">
       <div className="IssuesListWrapper fancyScrollBar" ref={wrapper}>
+        {issues!.length < 1 && (
+          <span className="noIssues">No issues created yet</span>
+        )}
         <div className="issueList" ref={list}>
           {issues!.map((issue) => (
             <IssueCard

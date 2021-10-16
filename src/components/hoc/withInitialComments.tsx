@@ -49,7 +49,7 @@ const withInitialComments = (Wrapped: FC<IssueDetailsComponent>) =>
     };
 
     useEffect(() => {
-      loadData();
+      issueId && loadData();
     }, []);
 
     useDidUpdateEffect(() => {

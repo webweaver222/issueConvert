@@ -7,7 +7,6 @@ const withModal =
   (modalScernario: (props: any) => JSX.Element) =>
   (Wrapped: FC<IssueDetailsComponent>) =>
   (props: IssueDetailsComponent) => {
-    console.log(props);
     const [state, setState] = useState<{
       opened: boolean;
     }>({
