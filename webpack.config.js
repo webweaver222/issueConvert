@@ -19,7 +19,7 @@ module.exports = (env = {}) => {
   const getPlugins = () => {
     const plugins = [
       new HtmlWebpackPlugin({
-        title: "issues",
+        title: "issueConv",
         template: "public/index.html",
       }),
     ];
@@ -36,7 +36,7 @@ module.exports = (env = {}) => {
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: isProd ? "main-[hash:8].js" : undefined,
-      publicPath: "/issues/",
+      publicPath: "",
     },
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -45,7 +45,12 @@ module.exports = (env = {}) => {
 
     module: {
       rules: [
-        { test: /\.tsx?$/, loader: "babel-loader", exclude: /node_modules/ },
+        {
+          test: /\.tsx?$/,
+          loader: "babel-loader",
+          include: path.resolve(__dirname, "src"),
+          exclude: /node_modules/,
+        },
         { test: /\.css$/, use: getStyleLoaders() },
         {
           test: /\.s[ca]ss$/,
@@ -80,9 +85,30 @@ module.exports = (env = {}) => {
 
     optimization: isProd
       ? {
+          splitChunks: {
+            chunks: "all",
+          },
           minimizer: [new TerserWebpackPlugin()],
         }
-      : {},
+      : {
+          runtimeChunk: true,
+          /*splitChunks: {
+            cacheGroups: {
+              gql_vendors: {
+                test: /[\\/]node_modules[\\/](graphql|@apollo[\\/]client)[\\/]/,
+                name: "gql_vendors",
+                chunks: "initial",
+                enforce: true,
+              },
+              react_vendors: {
+                test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+                name: "react_vendors",
+                chunks: "initial",
+                enforce: true,
+              },
+            },
+          },*/
+        },
 
     devServer: {
       //host: '0.0.0.0',
