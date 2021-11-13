@@ -32,6 +32,7 @@ const withDataFetch =
               }
             )
             .catch((e) => {
+              console.log(e);
               setFetching(false);
               setStatus(e.message);
             });
